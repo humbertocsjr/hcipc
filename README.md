@@ -7,6 +7,8 @@ Escolhida com o objetivo de ser uma licença aberta porém incompatível com a G
 
 Este projeto tem como objetivo de criar uma versão independente de plataforma de um interpretador de Pseudo-Código, compatível com o VisuAlg.
 
+Projeto inspirado nas aulas da Professora Débora, que deveria estar dando aula na USP
+
 ## Objetivos Iniciais (Focado diretamente na execução do Interpretador)
 
 - [x] Estrutura Base
