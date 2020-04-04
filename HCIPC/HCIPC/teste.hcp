@@ -1,0 +1,12 @@
+﻿ALGORITMO "teste"
+
+var
+    teste:inteiro
+
+inicio
+
+    teste:= 1+2
+    teste <- teste + 2
+    escreval("Soma = ", teste)
+
+fimalgoritmo

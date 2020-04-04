@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">anycpu</Platform>
+    <ProjectGuid>{AA583944-AB32-47E5-9FD8-F4192F398A71}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>HCIPC</RootNamespace>
+    <AssemblyName>HCIPC</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|anycpu' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Arvore\No.cs" />
+    <Compile Include="Arvore\NoNumeroInteiro.cs" />
+    <Compile Include="Fonte.cs" />
+    <Compile Include="EstadoExecucao.cs" />
+    <Compile Include="Arvore\NoSoma.cs" />
+    <Compile Include="Erro.cs" />
+    <Compile Include="Arvore\NoOperacaoMatematicaBase.cs" />
+    <Compile Include="Arvore\NoSubtracao.cs" />
+    <Compile Include="Arvore\NoMultiplicacao.cs" />
+    <Compile Include="Arvore\NoDivisao.cs" />
+    <Compile Include="Arvore\NoModulo.cs" />
+    <Compile Include="Arvore\NoAlgoritmo.cs" />
+    <Compile Include="Arvore\NoBlocoBase.cs" />
+    <Compile Include="Arvore\NoFimAlgoritmo.cs" />
+    <Compile Include="Arvore\NoTexto.cs" />
+    <Compile Include="Arvore\NoNumeroReal.cs" />
+    <Compile Include="Arvore\NoAbreParenteses.cs" />
+    <Compile Include="Arvore\NoFechaParenteses.cs" />
+    <Compile Include="Arvore\NoIgual.cs" />
+    <Compile Include="Arvore\NoAtribuicao.cs" />
+    <Compile Include="Arvore\NoFimDeLinha.cs" />
+    <Compile Include="Arvore\NoEscreva.cs" />
+    <Compile Include="Arvore\NoVirgula.cs" />
+    <Compile Include="Arvore\NoDoisPontos.cs" />
+    <Compile Include="Arvore\NoDeclararVariavel.cs" />
+    <Compile Include="Arvore\NoInicio.cs" />
+    <Compile Include="Arvore\NoVar.cs" />
+    <Compile Include="Arvore\NoTipoInteiro.cs" />
+    <Compile Include="Arvore\NoTipoReal.cs" />
+    <Compile Include="Arvore\NoTipoCaracter.cs" />
+    <Compile Include="Arvore\NoBloco.cs" />
+    <Compile Include="Arvore\NoLerVariavel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Arvore\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="teste.hcp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
