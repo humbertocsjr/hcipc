@@ -1,7 +1,9 @@
 # Humberto Costa | Interpretador de Pseudo-Código
 
 Licenciamento: Old 4-clause BSD
+
 Escolhida com o objetivo de ser uma licença aberta porém incompatível com a GPL, assim perturbando a vida de gente chata =)
+Requer a 'publicidade' da origem do código fonte, conforme a licença, o que impede que se misture código GPL com este.
 
 ## Projeto
 
