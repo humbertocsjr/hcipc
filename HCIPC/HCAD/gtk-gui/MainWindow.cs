@@ -36,7 +36,7 @@ public partial class MainWindow
 		global::Stetic.Gui.Initialize(this);
 		// Widget MainWindow
 		this.Name = "MainWindow";
-		this.Title = global::Mono.Unix.Catalog.GetString("MainWindow");
+		this.Title = global::Mono.Unix.Catalog.GetString("Humberto Costa | Ambiente de Desenvolvimento");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 		// Container child MainWindow.Gtk.Container+ContainerChild
 		this.vbox2 = new global::Gtk.VBox();
@@ -169,8 +169,8 @@ public partial class MainWindow
 		{
 			this.Child.ShowAll();
 		}
-		this.DefaultWidth = 383;
-		this.DefaultHeight = 300;
+		this.DefaultWidth = 599;
+		this.DefaultHeight = 447;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.novoBotao.Clicked += new global::System.EventHandler(this.OnNovoBotaoClicked);
