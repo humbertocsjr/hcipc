@@ -20,5 +20,6 @@ inicio
     escreval("Multiplicação.............: ", n1*n2)
     escreval("Divisão...................: ", n1/n2)
     escreval("Módulo....................: ", n1 mod n2)
+    escreval("Igual.....................: ", n1=n2)
  
 fimalgoritmo

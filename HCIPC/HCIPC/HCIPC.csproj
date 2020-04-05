@@ -71,6 +71,13 @@
     <Compile Include="EntradaSaida.cs" />
     <Compile Include="EntradaSaidaTerminal.cs" />
     <Compile Include="Interpretador.cs" />
+    <Compile Include="Arvore\NoSe.cs" />
+    <Compile Include="Arvore\NoComparadorBase.cs" />
+    <Compile Include="Arvore\NoMaiorQue.cs" />
+    <Compile Include="Arvore\NoMenorQue.cs" />
+    <Compile Include="Arvore\NoMaiorIgualA.cs" />
+    <Compile Include="Arvore\NoMenorIgualA.cs" />
+    <Compile Include="Arvore\NoDiferente.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Arvore\" />

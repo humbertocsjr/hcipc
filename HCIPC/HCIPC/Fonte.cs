@@ -1,4 +1,35 @@
-﻿using System;
+﻿// /*
+// * Copyright (c) 2020
+// *      Humberto Costa dos Santos Junior.  All rights reserved.
+// *
+// * Redistribution and use in source and binary forms, with or without
+// * modification, are permitted provided that the following conditions
+// * are met:
+// * 1. Redistributions of source code must retain the above copyright
+// *    notice, this list of conditions and the following disclaimer.
+// * 2. Redistributions in binary form must reproduce the above copyright
+// *    notice, this list of conditions and the following disclaimer in the
+// *    documentation and/or other materials provided with the distribution.
+// * 3. All advertising materials mentioning features or use of this software
+// *    must display the following acknowledgement:
+// *      This product includes software developed by Humberto Costa dos Santos Junior and its contributors.
+// * 4. Neither the name of the Humberto Costa dos Santos Junior nor the names 
+// *    of its contributors may be used to endorse or promote products derived 
+// *    from this software without specific prior written permission.
+// *
+// * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+// * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+// * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+// * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+// * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+// * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+// * SUCH DAMAGE.
+// */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HCIPC.Arvore;
@@ -221,7 +252,7 @@ namespace HCIPC
             return no;
         }
 
-        private No ProcessarExpressao3(ref List<No> nos)
+        private No ProcessarExpressao4(ref List<No> nos)
         {
             //Organiza o terceiro nivel da árvore de nós de uma expressão
             No no = null;
@@ -249,11 +280,11 @@ namespace HCIPC
 
         }
 
-        private No ProcessarExpressao2(ref List<No> nos)
+        private No ProcessarExpressao3(ref List<No> nos)
         {
             //Organiza o segundo nivel da árvore de nós de uma expressão
             No no = null;
-            no = ProcessarExpressao3(ref nos);
+            no = ProcessarExpressao4(ref nos);
             if (nos.Any())
             {
                 if (nos.First() is NoSoma)
@@ -277,11 +308,11 @@ namespace HCIPC
 
         }
 
-        private No ProcessarExpressao(ref List<No> nos)
+        private No ProcessarExpressao2(ref List<No> nos)
         {
             //Organiza o primeiro nivel da árvore de nós de uma expressão
             No no = null;
-            no = ProcessarExpressao2(ref nos);
+            no = ProcessarExpressao3(ref nos);
             if (nos.Any())
             {
                 if (nos.First() is NoMultiplicacao)
@@ -301,6 +332,33 @@ namespace HCIPC
                     no = noMatematica;
                 }
                 else if (nos.First() is NoModulo)
+                {
+                    var noMatematica = nos.First();
+                    nos.Remove(nos.First());
+                    ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    no = noMatematica;
+                }
+            }
+            return no;
+        }
+
+        private No ProcessarExpressao(ref List<No> nos)
+        {
+            //Organiza o primeiro nivel da árvore de nós de uma expressão
+            No no = null;
+            no = ProcessarExpressao2(ref nos);
+            if (nos.Any())
+            {
+                if
+                    (
+                        nos.First() is NoIgual |
+                        nos.First() is NoDiferente |
+                        nos.First() is NoMaiorQue |
+                        nos.First() is NoMaiorIgualA |
+                        nos.First() is NoMenorQue |
+                        nos.First() is NoMaiorIgualA
+                    )
                 {
                     var noMatematica = nos.First();
                     nos.Remove(nos.First());
@@ -400,6 +458,22 @@ namespace HCIPC
                     break;
                 case "=":
                     no = new NoIgual();
+                    break;
+                case "<":
+                    no = new NoMenorQue();
+                    break;
+                case "<=":
+                    no = new NoMenorIgualA();
+                    break;
+                case ">":
+                    no = new NoMaiorQue();
+                    break;
+                case ">=":
+                    no = new NoMaiorIgualA();
+                    break;
+                case "!=":
+                case "<>":
+                    no = new NoDiferente();
                     break;
                 case ":":
                     no = new NoDoisPontos();
@@ -568,6 +642,12 @@ namespace HCIPC
                                         no = new NoLeia()
                                         {
                                             Nome = ((NoLerVariavel)nosFinal.First()).Nome
+                                        };
+                                        break;
+                                    case "se":
+                                        no = new NoSe()
+                                        {
+                                            Condicao = nosFinal.First()
                                         };
                                         break;
                                     default:
