@@ -12,6 +12,7 @@ namespace HCIPC.Arvore
 
         protected override void Executar(ref EstadoExecucao estado)
         {
+            //Retorna o valor guardado neste nó do código fonte
             estado.Valor = Valor;
         }
     }

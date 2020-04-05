@@ -11,6 +11,7 @@ namespace HCIPC.Arvore
         {
             foreach (var no in Nos)
             {
+                //Executa os comandos deste bloco
                 no.ExecutarNo(ref estado);
             }
         }

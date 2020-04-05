@@ -9,8 +9,16 @@ namespace HCIPC.Arvore
 
         protected override void Executar(ref EstadoExecucao estado)
         {
-            decimal valor = ProcessarNo(Item1, ref estado) % ProcessarNo(Item2, ref estado);
-            estado.Valor = valor;
+            try
+            {
+                //Processa os itens e calcula o resultado deles
+                decimal valor = ProcessarNo(Item1, ref estado) % ProcessarNo(Item2, ref estado);
+                estado.Valor = valor;
+            }
+            catch (OverflowException)
+            {
+                throw new Erro(this, "Resultado do cálculo ultrapassa o limite de valor do destino");
+            }
         }
     }
 }

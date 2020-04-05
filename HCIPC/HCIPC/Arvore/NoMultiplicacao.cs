@@ -11,6 +11,7 @@ namespace HCIPC.Arvore
         {
             try
             {
+                //Processa os itens e calcula o resultado deles
                 decimal valor = ProcessarNo(Item1, ref estado) * ProcessarNo(Item2, ref estado);
                 estado.Valor = valor;
             }

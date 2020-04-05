@@ -12,7 +12,10 @@ namespace HCIPC.Arvore
 
         protected override void Executar(ref EstadoExecucao estado)
         {
+            //Executa o nó que determina o valor a ser atribuido
             Conteudo.ExecutarNo(ref estado);
+            //Armazena o novo valor na variável
+            //TODO: Emitir erro se os tipos forem incompatíveis
             estado[VariavelDestino] = estado.Valor;
         }
     }

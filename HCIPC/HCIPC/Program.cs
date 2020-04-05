@@ -17,6 +17,7 @@ namespace HCIPC
             //TODO: Implementar leitura dos argumentos do Main para carregar quaisquer arquivos
             interpretador.AdicionarArquivo("teste.hcp", true);
 
+            //Executa o código fonte até o fim ou interrompe se encontrar um erro
             if(interpretador.Executar())
             {
                 Console.WriteLine();

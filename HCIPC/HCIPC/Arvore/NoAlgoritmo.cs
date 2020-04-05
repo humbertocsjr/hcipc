@@ -15,7 +15,9 @@ namespace HCIPC.Arvore
         {
             foreach (var no in Nos)
             {
-                // Verificar se for do tipo VAR ou INICIO, executar, ignorando funcoes e procedimentos
+                //TODO: Verificar se for do tipo VAR ou INICIO, executar, ignorando funcoes e procedimentos
+
+                //Executa o comando na lista de comandos dentro do Algoritmo
                 no.ExecutarNo(ref estado);
             }
         }

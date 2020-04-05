@@ -18,6 +18,7 @@ namespace HCIPC
             }
             set
             {
+                //Quando um código fonte é gravado, armazena as posições dos caracteres em referencia as linhas e colunas deles
                 Posicoes.Clear();
                 PosicoesLinhas.Clear();
                 _fonte = value;
@@ -44,8 +45,10 @@ namespace HCIPC
                 PosicoesLinhas.Add(linha + 1, _fonte.Length);
             }
         }
+        //Armazena o indice de Posicões de linhas e colunas
         private Dictionary<int, int[]> Posicoes { get; set; }
         private Dictionary<int, int> PosicoesLinhas { get; set; }
+        //Armazena posição atual e anterior, para andar pelo código fonte durante geração da arvore
         private int PosicaoLeitura { get; set; }
         private int PosicaoLeituraNoAnterior { get; set; }
         private int PosicaoLeituraNoAtual { get; set; }
@@ -53,6 +56,7 @@ namespace HCIPC
         private int Linha { get; set; }
         private int Coluna { get; set; }
         private char Atual { get; set; }
+        //Nó raiz deste codigo fonte, gerado pelo ProcessarCodigoFonte
         public No NoRaiz { get; set; }
 
         public Fonte()
@@ -70,7 +74,8 @@ namespace HCIPC
 
         public string ExtrairLinha(int linha)
         {
-            if(PosicoesLinhas.ContainsKey(linha))
+            //Extrai uma linha do codigo fonte
+            if (PosicoesLinhas.ContainsKey(linha))
             {
                 return _fonte.Substring(PosicoesLinhas[linha], PosicoesLinhas[linha + 1] - PosicoesLinhas[linha]).Replace("\n","").Replace("\r","");
             }
@@ -79,6 +84,7 @@ namespace HCIPC
 
         private char LerCaractere()
         {
+            //Le e extrai próximo caractere, andando pelo codigo fonte
             char retorno = (char)0;
             if (CodigoFonte.Length > PosicaoLeitura)
             {
@@ -91,6 +97,7 @@ namespace HCIPC
 
         private char PreverCaractere()
         {
+            //Busca próximo caractere sem andar pelo código fonte
             char retorno = (char)0;
             if (CodigoFonte.Length > PosicaoLeitura)
             {
@@ -101,12 +108,14 @@ namespace HCIPC
 
         private void DesfazerUltimoLerTrecho()
         {
+            //Volta um trecho de codigo fonte
             PosicaoLeitura = PosicaoLeituraNoAtual;
             Atual = CodigoFonte[PosicaoLeitura - 1];
         }
 
         private string LerTrecho()
         {
+            //Extrai o proximo trecho (palavra, caractere, token)
             string trecho = "";
             // Pula Espacos em Branco
             while (new char[]{ ' ', '\t' }.Contains(Atual)) { LerCaractere(); }
@@ -130,6 +139,7 @@ namespace HCIPC
                     }
                     break;
                 case '"':
+                    //Texto entre aspas
                     trecho += Atual;
                     LerCaractere();
                     while(Atual != '"')
@@ -147,12 +157,14 @@ namespace HCIPC
                     switch (PreverCaractere())
                     {
                         case '=':
+                            //Caso seja ':=' armazena como um unico token
                             trecho += Atual;
                             LerCaractere();
                             trecho += Atual;
                             LerCaractere();
                             break;
                         default:
+                            //Senão armazena o '=' sozinho
                             trecho += Atual;
                             LerCaractere();
                             break;
@@ -161,14 +173,14 @@ namespace HCIPC
                 case '<':
                     switch (PreverCaractere())
                     {
-                        case '-':
-                        case '=':
+                        case '-': //'<-'
+                        case '=': //'<='
                             trecho += Atual;
                             LerCaractere();
                             trecho += Atual;
                             LerCaractere();
                             break;
-                        default:
+                        default: // '<'
                             trecho += Atual;
                             LerCaractere();
                             break;
@@ -177,19 +189,20 @@ namespace HCIPC
                 case '>':
                     switch (PreverCaractere())
                     {
-                        case '=':
+                        case '='://'>='
                             trecho += Atual;
                             LerCaractere();
                             trecho += Atual;
                             LerCaractere();
                             break;
-                        default:
+                        default://'>'
                             trecho += Atual;
                             LerCaractere();
                             break;
                     }
                     break;
                 default:
+                    //Armazena os caracteres que não entram nas regras anteriores, individualmente
                     trecho += Atual;
                     LerCaractere();
                     break;
@@ -199,6 +212,7 @@ namespace HCIPC
 
         private No LerNoTipo(Type tipo)
         {
+            //Caso seja um nó do tipo esperado retorna, senão emite erro
             No no = ProcessarNo();
             if (!tipo.IsInstanceOfType(no))
             {
@@ -209,6 +223,7 @@ namespace HCIPC
 
         private No ProcessarExpressao3(ref List<No> nos)
         {
+            //Organiza o terceiro nivel da árvore de nós de uma expressão
             No no = null;
             if (nos.First() is NoNumeroInteiro)
             {
@@ -236,6 +251,7 @@ namespace HCIPC
 
         private No ProcessarExpressao2(ref List<No> nos)
         {
+            //Organiza o segundo nivel da árvore de nós de uma expressão
             No no = null;
             no = ProcessarExpressao3(ref nos);
             if (nos.Any())
@@ -263,6 +279,7 @@ namespace HCIPC
 
         private No ProcessarExpressao(ref List<No> nos)
         {
+            //Organiza o primeiro nivel da árvore de nós de uma expressão
             No no = null;
             no = ProcessarExpressao2(ref nos);
             if (nos.Any())
@@ -297,6 +314,7 @@ namespace HCIPC
 
         public No ProcessarCodigoFonte()
         {
+            //Processa o nó raiz e o armazena
             No no = ProcessarNo();
             NoRaiz = no;
             return no;
@@ -304,6 +322,7 @@ namespace HCIPC
 
         public No ProcessarNo()
         {
+            //Processa o próximo nó, quando for um nó especial de bloco, processa os nós abaixo
             PosicaoLeituraNoAnterior = PosicaoLeituraNoAtual;
             PosicaoLeituraNoAtual = PosicaoLeitura;
             No no = null;
@@ -389,6 +408,7 @@ namespace HCIPC
                     no = new NoFimDeLinha();
                     break;
                 case string s when decimal.TryParse(s, out numero):
+                    //Caso seja um número, diferenciando quando decimal
                     if (trecho.Contains('.'))
                     {
                         no = new NoNumeroReal() { Valor = numero };
@@ -402,6 +422,7 @@ namespace HCIPC
                     {
                         if (trecho.StartsWith("\""))
                         {
+                            //Texto entre aspas
                             no = new NoTexto()
                             {
                                 Valor = trecho.Substring(1)
@@ -413,14 +434,16 @@ namespace HCIPC
                             No proximo = ProcessarNo();
                             if (proximo is NoAtribuicao)
                             {
+                                //Quando é uma atribuição. Ex: VAR := 1
                                 NoAtribuicao atrib = new NoAtribuicao();
                                 List<No> nos = new List<No>();
-
+                                //Le os nós até o fim da linha
                                 while (!((proximo = ProcessarNo()) is NoFimDeLinha))
                                 {
                                     nos.Add(proximo);
                                 }
                                 atrib.VariavelDestino = trecho.ToLower();
+                                //Com os nós separados, monta a arvore de Expressão, o que na prática muda de notação padrão matemática para notação polonesa reversa
                                 atrib.Conteudo = ProcessarExpressao(ref nos);
 
                                 no = atrib;
@@ -428,7 +451,15 @@ namespace HCIPC
                             else if(proximo is NoDoisPontos | proximo is NoVirgula)
                             {
                                 List<No> nos = new List<No>();
-                                nos.Add(new NoDeclararVariavel() { Nome = trecho });
+                                nos.Add(new NoDeclararVariavel()
+                                {
+                                    Nome = trecho,
+                                    Fonte = this,
+                                    FontePosicao = PosicaoLeituraTrechoAtual,
+                                    FonteLinha = Posicoes[PosicaoLeituraTrechoAtual][0],
+                                    FonteColuna = Posicoes[PosicaoLeituraTrechoAtual][1]
+                                });
+                                //Caso seja uma declaração de multiplas variáveis separadas por vírgula, processa elas
                                 if (proximo is NoVirgula)
                                 {
                                     while ((trecho = LerTrecho()) != ":")
@@ -447,9 +478,11 @@ namespace HCIPC
                                         }
                                     }
                                 }
+                                //Depois de gerado os nós de declaração, verifica qual o tipo após o ':' e declara neles
                                 proximo = ProcessarNo();
                                 foreach (NoDeclararVariavel noTemp in nos)
                                 {
+                                    //Define um valor inicial generico, para que futuramente possa comparar tipos
                                     if (proximo is NoTipoInteiro)
                                     {
                                         noTemp.ValorInicial = 0;
@@ -463,6 +496,7 @@ namespace HCIPC
                                         noTemp.ValorInicial = "";
                                     }
                                 }
+                                //Agrupa todas as declarações em um unico bloco
                                 no = new NoBloco()
                                 {
                                     Nos = nos
@@ -470,6 +504,7 @@ namespace HCIPC
                             }
                             else if(proximo is NoAbreParenteses)
                             {
+                                //Se for a chamada de um procedimento. Ex: ESCREVAL("TESTE")
                                 int contaParenteses = 1;
                                 List<No> nos = new List<No>();
                                 List<No> nosTemp = new List<No>();
@@ -505,7 +540,7 @@ namespace HCIPC
                                     }
                                 }
                                 if(nosTemp.Any())nosFinal.Add(ProcessarExpressao(ref nosTemp));
-                                //Etapa 3 - Montar chamada
+                                //Etapa 3 - Montar chamada do procedimento
                                 switch (trecho.ToLower())
                                 {
                                     case "escreva":
@@ -534,6 +569,7 @@ namespace HCIPC
                             }
                             else
                             {
+                                //Se for apenas uma leitura de variável, e não uma das anteriores
                                 no = new NoLerVariavel()
                                 {
                                     Nome = trecho
@@ -545,6 +581,7 @@ namespace HCIPC
                     break;
             }
 
+            //Armazena no nó, qual a posição atual no código fonte, em caso de erro no futuro, o depurador conseguir ler
             if (no != null)
             {
                 no.Fonte = this;
