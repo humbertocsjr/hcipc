@@ -7,6 +7,12 @@ Requer a 'publicidade' da origem do código fonte, conforme a licença, o que im
 
 ## Como usar
 
+### Projeto HCAD - Ambiente de Desenvolvimento
+
+Um editor de texto simples com funções de execução de código
+
+### Projeto HCIPC - Interpretador de Pseudo-Código
+
 Atualmente o Interpretador sempre olhará o arquivo teste.hcp que deve estar na mesma pasta que o executável.
 Bastando alterar o conteúdo do arquivo e executar novamente.
 
@@ -71,6 +77,7 @@ Projeto inspirado nas aulas da Professora Débora, que deveria estar dando aula 
 
 ## Objetivos Auxiliares
 
-- [ ] Montar Ambiente de Desenvolvimento para Execução do Código Fonte
+- [x] Montar Ambiente de Desenvolvimento para Execução do Código Fonte
+- [ ] Melhorar Ambiente de Desenvolvimento
 - [ ] Montar documentação da Linguagem e Funcionamento da ferramenta
 - [ ] Montar rotinas de testes
