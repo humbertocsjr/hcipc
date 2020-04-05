@@ -32,64 +32,15 @@
 using System;
 namespace HCIPC.Arvore
 {
-    public abstract class NoComparadorBase : NoOperacaoMatematicaBase
+    public class NoFimEnquanto : No
     {
-        public NoComparadorBase()
+        public NoFimEnquanto()
         {
         }
 
-        public decimal LerNumero(object valor)
+        protected override void Executar(ref EstadoExecucao estado)
         {
-            decimal retorno = 0m;
-            if(valor is int)
-            {
-                retorno = (decimal)(int)valor;
-            }
-            else
-            if (valor is decimal)
-            {
-                retorno = (decimal)valor;
-            }
-            else
-            {
-                throw new Erro(this, "Esperado valor numérico");
-            }
-            return retorno;
-        }
-
-        public bool ENumerico(object valor)
-        {
-            return valor is decimal || valor is int;
-        }
-
-        public bool ETexto(object valor)
-        {
-            return valor is string;
-        }
-
-        public bool ELogico(object valor)
-        {
-            return valor is bool;
-        }
-
-        public bool SaoNumericos(object valor1, object valor2)
-        {
-            return ENumerico(valor1) & ENumerico(valor2);
-        }
-
-        public bool SaoLogicos(object valor1, object valor2)
-        {
-            return ELogico(valor1) & ELogico(valor2);
-        }
-
-        public bool SaoTextos(object valor1, object valor2)
-        {
-            return ETexto(valor1) & ETexto(valor2);
-        }
-
-        public bool ContemTextos(object valor1, object valor2)
-        {
-            return ETexto(valor1) | ETexto(valor2);
+            throw new NotImplementedException();
         }
     }
 }

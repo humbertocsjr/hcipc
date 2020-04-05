@@ -85,6 +85,12 @@
     <Compile Include="Arvore\NoTipoLogico.cs" />
     <Compile Include="Arvore\NoVerdadeiro.cs" />
     <Compile Include="Arvore\NoFalso.cs" />
+    <Compile Include="Arvore\NoE.cs" />
+    <Compile Include="Arvore\NoOu.cs" />
+    <Compile Include="Arvore\NoEnquanto.cs" />
+    <Compile Include="Arvore\NoFimEnquanto.cs" />
+    <Compile Include="Arvore\NoAte.cs" />
+    <Compile Include="Arvore\NoRepita.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Arvore\" />

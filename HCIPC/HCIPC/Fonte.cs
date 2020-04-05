@@ -169,6 +169,19 @@ namespace HCIPC
                         }
                     }
                     break;
+                case char a when ((a >= '0' & a <= '9') ):
+                    //Identificador
+                    {
+                        while
+                            (
+                                (Atual >= '0' & Atual <= '9')
+                            )
+                        {
+                            trecho += Atual;
+                            LerCaractere();
+                        }
+                    }
+                    break;
                 case '"':
                     //Texto entre aspas
                     trecho += Atual;
@@ -252,7 +265,7 @@ namespace HCIPC
             return no;
         }
 
-        private No ProcessarExpressao4(ref List<No> nos)
+        private No ProcessarExpressao5(ref List<No> nos)
         {
             //Organiza o terceiro nivel da árvore de nós de uma expressão
             No no = null;
@@ -280,11 +293,11 @@ namespace HCIPC
 
         }
 
-        private No ProcessarExpressao3(ref List<No> nos)
+        private No ProcessarExpressao4(ref List<No> nos)
         {
             //Organiza o segundo nivel da árvore de nós de uma expressão
             No no = null;
-            no = ProcessarExpressao4(ref nos);
+            no = ProcessarExpressao5(ref nos);
             if (nos.Any())
             {
                 if (nos.First() is NoSoma)
@@ -308,11 +321,11 @@ namespace HCIPC
 
         }
 
-        private No ProcessarExpressao2(ref List<No> nos)
+        private No ProcessarExpressao3(ref List<No> nos)
         {
             //Organiza o primeiro nivel da árvore de nós de uma expressão
             No no = null;
-            no = ProcessarExpressao3(ref nos);
+            no = ProcessarExpressao4(ref nos);
             if (nos.Any())
             {
                 if (nos.First() is NoMultiplicacao)
@@ -343,11 +356,11 @@ namespace HCIPC
             return no;
         }
 
-        private No ProcessarExpressao(ref List<No> nos)
+        private No ProcessarExpressao2(ref List<No> nos)
         {
             //Organiza o primeiro nivel da árvore de nós de uma expressão
             No no = null;
-            no = ProcessarExpressao2(ref nos);
+            no = ProcessarExpressao3(ref nos);
             if (nos.Any())
             {
                 if
@@ -358,6 +371,29 @@ namespace HCIPC
                         nos.First() is NoMaiorIgualA |
                         nos.First() is NoMenorQue |
                         nos.First() is NoMaiorIgualA
+                    )
+                {
+                    var noMatematica = nos.First();
+                    nos.Remove(nos.First());
+                    ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    no = noMatematica;
+                }
+            }
+            return no;
+        }
+
+        private No ProcessarExpressao(ref List<No> nos)
+        {
+            //Organiza o primeiro nivel da árvore de nós de uma expressão
+            No no = null;
+            no = ProcessarExpressao2(ref nos);
+            if (nos.Any())
+            {
+                if
+                    (
+                        nos.First() is NoE |
+                        nos.First() is NoOu
                     )
                 {
                     var noMatematica = nos.First();
@@ -477,6 +513,19 @@ namespace HCIPC
                 case "fimse":
                     no = new NoFimSe();
                     break;
+                case "fimenquanto":
+                    no = new NoFimEnquanto();
+                    break;
+                case "ate":
+                case "até":
+                    no = new NoAte();
+                    break;
+                case "e":
+                    no = new NoE();
+                    break;
+                case "ou":
+                    no = new NoOu();
+                    break;
                 case "mod":
                 case "%":
                     no = new NoModulo();
@@ -512,6 +561,43 @@ namespace HCIPC
                     break;
                 case "\r":
                     no = new NoFimDeLinha();
+                    break;
+                case "repita":
+                    {
+                        int contaParenteses = 1;
+                        List<No> nos = new List<No>();
+                        List<No> nosTemp = new List<No>();
+                        List<No> nosFinal = new List<No>();
+                        //Etapa 1 - Gera comando Repita
+                        no = new NoRepita();
+                        No sub;
+                        //Processa e armazena os nós dentro do enquanto
+                        while (!((sub = ProcessarNo()) is NoAte))
+                        {
+                            ((NoRepita)no).Repeticao.Add(sub);
+                        }
+                        var proximo = LerNoTipo(typeof(NoAbreParenteses));
+                        //Etapa 2 - Ler os argumentos sem processar
+                        while (contaParenteses > 0)
+                        {
+                            proximo = ProcessarNo();
+                            if (proximo is NoAbreParenteses)
+                            {
+                                contaParenteses++;
+                            }
+                            else if (proximo is NoFechaParenteses)
+                            {
+                                contaParenteses--;
+                            }
+                            else
+                            {
+                                nos.Add(proximo);
+                            }
+                        }
+                        //Etapa 3 - Processar argumentos
+                        nosFinal.Add(ProcessarExpressao(ref nos));
+                        ((NoRepita)no).Condicao = nosFinal.First();
+                    }
                     break;
                 case string s when decimal.TryParse(s, out numero):
                     //Caso seja um número, diferenciando quando decimal
@@ -674,22 +760,39 @@ namespace HCIPC
                                         };
                                         break;
                                     case "se":
-                                        no = new NoSe()
                                         {
-                                            Condicao = nosFinal.First()
-                                        };
-                                        proximo = LerNoTipo(typeof(NoEntao));
-                                        No sub;
-                                        //Processa e armazena os nós dentro do algoritmo ate chegar no 'fimalgoritmo'
-                                        while (!((sub = ProcessarNo()) is NoFimSe) && !(sub is NoSeNao))
-                                        {
-                                            ((NoSe)no).SeSim.Add(sub);
-                                        }
-                                        if(sub is NoSeNao)
-                                        {
-                                            while (!((sub = ProcessarNo()) is NoFimSe))
+                                            no = new NoSe()
                                             {
-                                                ((NoSe)no).SeNao.Add(sub);
+                                                Condicao = nosFinal.First()
+                                            };
+                                            proximo = LerNoTipo(typeof(NoEntao));
+                                            No sub;
+                                            //Processa e armazena os nós dentro do se
+                                            while (!((sub = ProcessarNo()) is NoFimSe) && !(sub is NoSeNao))
+                                            {
+                                                ((NoSe)no).SeSim.Add(sub);
+                                            }
+                                            if (sub is NoSeNao)
+                                            {
+                                                while (!((sub = ProcessarNo()) is NoFimSe))
+                                                {
+                                                    ((NoSe)no).SeNao.Add(sub);
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case "enquanto":
+                                        {
+                                            no = new NoEnquanto()
+                                            {
+                                                Condicao = nosFinal.First()
+                                            };
+                                            proximo = LerNoTipo(typeof(NoFaca));
+                                            No sub;
+                                            //Processa e armazena os nós dentro do enquanto
+                                            while (!((sub = ProcessarNo()) is NoFimEnquanto))
+                                            {
+                                                ((NoEnquanto)no).Repeticao.Add(sub);
                                             }
                                         }
                                         break;
