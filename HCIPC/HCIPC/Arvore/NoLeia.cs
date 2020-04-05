@@ -11,7 +11,7 @@ namespace HCIPC.Arvore
 
         protected override void Executar(ref EstadoExecucao estado)
         {
-            var dados = Console.ReadLine();
+            var dados = estado.ES.Leia();
             if (estado[Nome] == null)
             {
                 throw new Erro(this, "Variável '" + Nome + "' não existe");
@@ -22,11 +22,27 @@ namespace HCIPC.Arvore
             }
             else if (estado[Nome] is decimal)
             {
-                estado.Valor = estado[Nome] = decimal.Parse(dados);
+                decimal valor = 0m;
+                if(decimal.TryParse(dados, out valor))
+                {
+                    estado.Valor = estado[Nome] = valor;
+                }
+                else
+                {
+                    throw new Erro(this, "Esperada inserção de valor numérico real pelo usuário");
+                }
             }
             else if (estado[Nome] is int)
             {
-                estado.Valor = estado[Nome] = int.Parse(dados);
+                int valor = 0;
+                if (int.TryParse(dados, out valor))
+                {
+                    estado.Valor = estado[Nome] = valor;
+                }
+                else
+                {
+                    throw new Erro(this, "Esperada inserção de valor numérico inteiro pelo usuário");
+                }
             }
             else
             {

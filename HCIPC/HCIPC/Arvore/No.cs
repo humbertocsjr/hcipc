@@ -5,6 +5,7 @@ namespace HCIPC.Arvore
     {
         // Dados para depuração do código interpretado
         public Fonte Fonte { get; set; }
+        public int FontePosicao { get; set; }
         public int FonteLinha { get; set; }
         public int FonteColuna { get; set; }
 
@@ -14,9 +15,20 @@ namespace HCIPC.Arvore
 
         public void ExecutarNo(ref EstadoExecucao estado)
         {
-            //TODO: Colocar aqui a parte de depuração esperando liberação da IDE
-            estado.NoAtual = this;
-            Executar(ref estado);
+            try
+            {
+                //TODO: Colocar aqui a parte de depuração esperando liberação da IDE
+                estado.NoAtual = this;
+                Executar(ref estado);
+            }
+            catch(Erro ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new Erro(this, "Erro desconhecido: " + ex.ToString());
+            }
         }
 
         protected abstract void Executar(ref EstadoExecucao estado);

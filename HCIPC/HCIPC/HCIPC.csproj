@@ -65,6 +65,9 @@
     <Compile Include="Arvore\NoBloco.cs" />
     <Compile Include="Arvore\NoLerVariavel.cs" />
     <Compile Include="Arvore\NoLeia.cs" />
+    <Compile Include="EntradaSaida.cs" />
+    <Compile Include="EntradaSaidaTerminal.cs" />
+    <Compile Include="Interpretador.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Arvore\" />

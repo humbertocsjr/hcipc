@@ -20,9 +20,9 @@ namespace HCIPC.Arvore
             {
                 estado.Valor = null;
                 no.ExecutarNo(ref estado);
-                if(estado.Valor != null) Console.Write(estado.Valor);
+                if(estado.Valor != null) estado.ES.Escreva(estado.Valor);
             }
-            if (EnterAoFinal) Console.WriteLine();
+            if (EnterAoFinal) estado.ES.Enter();
             estado.Valor = null;
         }
     }

@@ -7,21 +7,74 @@ namespace HCIPC
 {
     public class Fonte
     {
+        private string _fonte = "";
+
         public string NomeDoArquivo { get; set; }
-        public string CodigoFonte { get; set; }
-        public int PosicaoLeitura { get; set; }
-        public int PosicaoLeituraNoAnterior { get; set; }
-        public int PosicaoLeituraNoAtual { get; set; }
-        public char Atual { get; set; }
+        public string CodigoFonte
+        {
+            get
+            {
+                return _fonte;
+            }
+            set
+            {
+                Posicoes.Clear();
+                PosicoesLinhas.Clear();
+                _fonte = value;
+                int linha = 1;
+                int coluna = 0;
+                PosicoesLinhas.Add(1, 0);
+                for (int i = 0; i < _fonte.Length; i++)
+                {
+                    if(_fonte[i] == '\n')
+                    {
+                        linha++;
+                        coluna = 0;
+                        PosicoesLinhas.Add(linha, i);
+                    }
+                    else if (_fonte[i] == '\r')
+                    {
+                    }
+                    else
+                    {
+                        coluna++;
+                    }
+                    Posicoes.Add(i, new int[] { linha, coluna });
+                }
+                PosicoesLinhas.Add(linha + 1, _fonte.Length);
+            }
+        }
+        private Dictionary<int, int[]> Posicoes { get; set; }
+        private Dictionary<int, int> PosicoesLinhas { get; set; }
+        private int PosicaoLeitura { get; set; }
+        private int PosicaoLeituraNoAnterior { get; set; }
+        private int PosicaoLeituraNoAtual { get; set; }
+        private int PosicaoLeituraTrechoAtual { get; set; }
+        private int Linha { get; set; }
+        private int Coluna { get; set; }
+        private char Atual { get; set; }
+        public No NoRaiz { get; set; }
 
         public Fonte()
         {
+            PosicoesLinhas = new Dictionary<int, int>();
+            Posicoes = new Dictionary<int, int[]>();
             PosicaoLeitura = 0;
             PosicaoLeituraNoAnterior = 0;
             PosicaoLeituraNoAtual = 0;
+            PosicaoLeituraTrechoAtual = 0;
             NomeDoArquivo = "";
             CodigoFonte = "";
             Atual = ' '; // Necessario ser espaço para que o LerTrecho funcione corretamente
+        }
+
+        public string ExtrairLinha(int linha)
+        {
+            if(PosicoesLinhas.ContainsKey(linha))
+            {
+                return _fonte.Substring(PosicoesLinhas[linha], PosicoesLinhas[linha + 1] - PosicoesLinhas[linha]).Replace("\n","").Replace("\r","");
+            }
+            return null;
         }
 
         private char LerCaractere()
@@ -49,7 +102,6 @@ namespace HCIPC
         private void DesfazerUltimoLerTrecho()
         {
             PosicaoLeitura = PosicaoLeituraNoAtual;
-            PosicaoLeituraNoAnterior = -1;
             Atual = CodigoFonte[PosicaoLeitura - 1];
         }
 
@@ -58,6 +110,7 @@ namespace HCIPC
             string trecho = "";
             // Pula Espacos em Branco
             while (new char[]{ ' ', '\t' }.Contains(Atual)) { LerCaractere(); }
+            PosicaoLeituraTrechoAtual = PosicaoLeitura - 1;
             // Verifica o tipo de trecho
             switch (Atual)
             {
@@ -146,7 +199,7 @@ namespace HCIPC
 
         private No LerNoTipo(Type tipo)
         {
-            No no = ProcessarCodigoFonte();
+            No no = ProcessarNo();
             if (!tipo.IsInstanceOfType(no))
             {
                 throw new Erro(no, "Esperado nó do tipo '" + tipo + "' porém encontrado '" + no.GetType() + "'");
@@ -189,21 +242,19 @@ namespace HCIPC
             {
                 if (nos.First() is NoSoma)
                 {
+                    var noMatematica = nos.First();
                     nos.Remove(nos.First());
-                    no = new NoSoma()
-                    {
-                        Item1 = no,
-                        Item2 = ProcessarExpressao2(ref nos)
-                    };
+                    ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    no = noMatematica;
                 }
                 else if (nos.First() is NoSubtracao)
                 {
+                    var noMatematica = nos.First();
                     nos.Remove(nos.First());
-                    no = new NoSubtracao()
-                    {
-                        Item1 = no,
-                        Item2 = ProcessarExpressao2(ref nos)
-                    };
+                    ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    no = noMatematica;
                 }
             }
             return no;
@@ -218,30 +269,27 @@ namespace HCIPC
             {
                 if (nos.First() is NoMultiplicacao)
                 {
+                    var noMatematica = nos.First();
                     nos.Remove(nos.First());
-                    no = new NoMultiplicacao()
-                    {
-                        Item1 = no,
-                        Item2 = ProcessarExpressao(ref nos)
-                    };
+                    ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    no = noMatematica;
                 }
                 else if (nos.First() is NoDivisao)
                 {
+                    var noMatematica = nos.First();
                     nos.Remove(nos.First());
-                    no = new NoDivisao()
-                    {
-                        Item1 = no,
-                        Item2 = ProcessarExpressao(ref nos)
-                    };
+                    ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    no = noMatematica;
                 }
                 else if (nos.First() is NoModulo)
                 {
+                    var noMatematica = nos.First();
                     nos.Remove(nos.First());
-                    no = new NoModulo()
-                    {
-                        Item1 = no,
-                        Item2 = ProcessarExpressao(ref nos)
-                    };
+                    ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    no = noMatematica;
                 }
             }
             return no;
@@ -249,11 +297,19 @@ namespace HCIPC
 
         public No ProcessarCodigoFonte()
         {
+            No no = ProcessarNo();
+            NoRaiz = no;
+            return no;
+        }
+
+        public No ProcessarNo()
+        {
             PosicaoLeituraNoAnterior = PosicaoLeituraNoAtual;
             PosicaoLeituraNoAtual = PosicaoLeitura;
             No no = null;
             decimal numero = 0m;
             string trecho = LerTrecho();
+            int posicao = PosicaoLeituraTrechoAtual;
             switch (trecho.ToLower())
             {
                 case "":
@@ -265,7 +321,7 @@ namespace HCIPC
                         no = new NoAlgoritmo();
                         ((NoAlgoritmo)no).Nome = ((NoTexto)LerNoTipo(typeof(NoTexto))).Valor;
                         No sub;
-                        while(!((sub = ProcessarCodigoFonte()) is NoFimAlgoritmo))
+                        while(!((sub = ProcessarNo()) is NoFimAlgoritmo))
                         {
                             ((NoAlgoritmo)no).Nos.Add(sub);
                         }
@@ -354,13 +410,13 @@ namespace HCIPC
                         }
                         else
                         {
-                            No proximo = ProcessarCodigoFonte();
+                            No proximo = ProcessarNo();
                             if (proximo is NoAtribuicao)
                             {
                                 NoAtribuicao atrib = new NoAtribuicao();
                                 List<No> nos = new List<No>();
 
-                                while (!((proximo = ProcessarCodigoFonte()) is NoFimDeLinha))
+                                while (!((proximo = ProcessarNo()) is NoFimDeLinha))
                                 {
                                     nos.Add(proximo);
                                 }
@@ -379,11 +435,19 @@ namespace HCIPC
                                     {
                                         if(trecho != ",")
                                         {
-                                            nos.Add(new NoDeclararVariavel() { Nome = trecho });
+                                            No noTemporario = new NoDeclararVariavel()
+                                            {
+                                                Nome = trecho,
+                                                Fonte = this,
+                                                FontePosicao = PosicaoLeituraTrechoAtual,
+                                                FonteLinha = Posicoes[PosicaoLeituraTrechoAtual][0],
+                                                FonteColuna = Posicoes[PosicaoLeituraTrechoAtual][1]
+                                            };
+                                            nos.Add(noTemporario);
                                         }
                                     }
                                 }
-                                proximo = ProcessarCodigoFonte();
+                                proximo = ProcessarNo();
                                 foreach (NoDeclararVariavel noTemp in nos)
                                 {
                                     if (proximo is NoTipoInteiro)
@@ -413,7 +477,7 @@ namespace HCIPC
                                 //Etapa 1 - Ler os argumentos sem processar
                                 while (contaParenteses > 0)
                                 {
-                                    proximo = ProcessarCodigoFonte();
+                                    proximo = ProcessarNo();
                                     if (proximo is NoAbreParenteses)
                                     {
                                         contaParenteses++;
@@ -484,7 +548,9 @@ namespace HCIPC
             if (no != null)
             {
                 no.Fonte = this;
-                //TODO: Colocar linha e coluna
+                no.FontePosicao = posicao;
+                no.FonteLinha = Posicoes[posicao][0];
+                no.FonteColuna = Posicoes[posicao][1];
             }
 
             return no;

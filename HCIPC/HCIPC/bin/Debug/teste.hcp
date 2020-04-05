@@ -13,12 +13,12 @@ inicio
 
     soma <- n1 + n2;
 
-    escreval("Número 1.................: ", n1)
-    escreval("Número 2.................: ", n2)
-    escreval("Soma.....................: ", soma)
-    escreval("Subtração................: ", n1-n2)
-    escreval("Multiplicação............: ", n1*n2)
-    escreval("Divisão..................: ", n1/n2)
-    escreval("Módulo...................: ", n1 mod n2)
+    escreval("Número 1..................: ", n1)
+    escreval("Número 2..................: ", n2)
+    escreval("Soma......................: ", soma)
+    escreval("Subtração.................: ", n1-n2)
+    escreval("Multiplicação.............: ", n1*n2)
+    escreval("Divisão...................: ", n1/n2)
+    escreval("Módulo....................: ", n1 mod n2)
  
 fimalgoritmo

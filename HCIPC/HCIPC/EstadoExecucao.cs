@@ -6,6 +6,8 @@ namespace HCIPC
 {
     public class EstadoExecucao
     {
+        public Interpretador Interpretador { get; set; }
+        public EntradaSaida ES { get { return Interpretador.EntradaSaidaPadrao; } }
         public EstadoExecucao NivelGlobal { get; set; }
         public EstadoExecucao NivelAcima { get; set; }
         public No NoAtual { get; set; }
