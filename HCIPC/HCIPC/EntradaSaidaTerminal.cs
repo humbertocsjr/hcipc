@@ -17,7 +17,7 @@ namespace HCIPC
             var linha = erro.No.Fonte.ExtrairLinha(erro.Linha);
             if(linha !=null)
             {
-                Console.WriteLine("Código com erro.:");
+                Console.WriteLine("Código com erro.: [O '*' marca o local do erro]");
 
                 Console.WriteLine(linha);
                 Console.Write(new string(' ', erro.Coluna -1));
