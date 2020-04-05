@@ -9,6 +9,15 @@ Este projeto tem como objetivo de criar uma versão independente de plataforma d
 
 Projeto inspirado nas aulas da Professora Débora, que deveria estar dando aula na USP
 
+## Funcionamento
+
+- Lê o código em Pseudo-Código
+- Extrai os Tokens/Trechos(Palavras, sinais, números, strings, etc) do código fonte
+- Converte esses tokens/trechos em Nós de uma Arvore de Dados, onde se armazena as características de cada parte do código
+- Processa esses nós, para que eles sejam executáveis
+- Executa a partir do nó inicial, que sequencialmente guiará aos próximos
+- Se houver um erro armazena os dados disponíveis e exibe ao usuário mostrando a linha de comando que deu erro
+
 ## Objetivos Iniciais (Focado diretamente na execução do Interpretador)
 
 - [x] Estrutura Base
