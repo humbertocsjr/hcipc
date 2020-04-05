@@ -9,7 +9,7 @@
     <AssemblyName>HCIPC</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <Description>Humberto Costa | Interpretador de Pseudo-Código</Description>
-    <ReleaseVersion>0.0.4</ReleaseVersion>
+    <ReleaseVersion>0.0.5</ReleaseVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">
