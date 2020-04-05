@@ -323,12 +323,18 @@ namespace HCIPC
         public No ProcessarNo()
         {
             //Processa o próximo nó, quando for um nó especial de bloco, processa os nós abaixo
+            //Guarda a posição atual no codigo fonte
             PosicaoLeituraNoAnterior = PosicaoLeituraNoAtual;
             PosicaoLeituraNoAtual = PosicaoLeitura;
+            //Nó que será retornado
             No no = null;
+            //Usado para conversões em numeros
             decimal numero = 0m;
+            //Le o proximo trecho de codigo fonte (Palavra, sinal, virgula, numero, etc)
             string trecho = LerTrecho();
+            //Guarda posicao no codigo fonte deste trecho lido
             int posicao = PosicaoLeituraTrechoAtual;
+            //Dependendo do conteudo do trecho, trata-o, e converta em um Nó (Comando a ser executado)
             switch (trecho.ToLower())
             {
                 case "":
@@ -340,6 +346,7 @@ namespace HCIPC
                         no = new NoAlgoritmo();
                         ((NoAlgoritmo)no).Nome = ((NoTexto)LerNoTipo(typeof(NoTexto))).Valor;
                         No sub;
+                        //Processa e armazena os nós dentro do algoritmo ate chegar no 'fimalgoritmo'
                         while(!((sub = ProcessarNo()) is NoFimAlgoritmo))
                         {
                             ((NoAlgoritmo)no).Nos.Add(sub);
@@ -434,7 +441,7 @@ namespace HCIPC
                             No proximo = ProcessarNo();
                             if (proximo is NoAtribuicao)
                             {
-                                //Quando é uma atribuição. Ex: VAR := 1
+                                //Quando é uma atribuição. Ex: VARIAVEL <- 1
                                 NoAtribuicao atrib = new NoAtribuicao();
                                 List<No> nos = new List<No>();
                                 //Le os nós até o fim da linha
@@ -443,13 +450,14 @@ namespace HCIPC
                                     nos.Add(proximo);
                                 }
                                 atrib.VariavelDestino = trecho.ToLower();
-                                //Com os nós separados, monta a arvore de Expressão, o que na prática muda de notação padrão matemática para notação polonesa reversa
+                                //Com os nós separados, monta a arvore de Expressão, o que na prática muda de notação padrão matemática para notação polonesa reversa que é facilmente executavel posteriormente
                                 atrib.Conteudo = ProcessarExpressao(ref nos);
 
                                 no = atrib;
                             }
                             else if(proximo is NoDoisPontos | proximo is NoVirgula)
                             {
+                                //Quando seja uma declaração de variavel. Ex: variavel1 : inteiro
                                 List<No> nos = new List<No>();
                                 nos.Add(new NoDeclararVariavel()
                                 {
@@ -459,7 +467,7 @@ namespace HCIPC
                                     FonteLinha = Posicoes[PosicaoLeituraTrechoAtual][0],
                                     FonteColuna = Posicoes[PosicaoLeituraTrechoAtual][1]
                                 });
-                                //Caso seja uma declaração de multiplas variáveis separadas por vírgula, processa elas
+                                //Caso seja uma declaração de multiplas variáveis separadas por vírgula, processa elas. Ex: var1, var2, var3: inteiro
                                 if (proximo is NoVirgula)
                                 {
                                     while ((trecho = LerTrecho()) != ":")
