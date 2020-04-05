@@ -47,7 +47,7 @@ namespace HCIPC.Arvore
 
             if (SaoNumericos(valor1, valor2))
             {
-                estado.Valor = (LerNumero(valor1) >= LerNumero(valor2)) ? 1 : 0;
+                estado.Valor = (LerNumero(valor1) >= LerNumero(valor2));
             }
             else
             {

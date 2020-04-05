@@ -42,12 +42,18 @@ namespace HCIPC.Arvore
 
         public NoSe()
         {
+            SeSim = new List<No>();
+            SeNao = new List<No>();
         }
 
         protected override void Executar(ref EstadoExecucao estado)
         {
             Condicao.ExecutarNo(ref estado);
-            if((int)estado.Valor > 0)
+            if(!(estado.Valor is bool))
+            {
+                throw new Erro(this, "Não é possível converter um valor não lógico em lógico");
+            }
+            if((bool)estado.Valor)
             {
                 foreach (var no in SeSim)
                 {

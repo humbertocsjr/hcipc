@@ -32,10 +32,35 @@
 using System;
 namespace HCIPC.Arvore
 {
-    public class NoDiferente
+    public class NoDiferente : NoComparadorBase
     {
         public NoDiferente()
         {
+        }
+
+        protected override void Executar(ref EstadoExecucao estado)
+        {
+            Item1.ExecutarNo(ref estado);
+            var valor1 = estado.Valor;
+            Item2.ExecutarNo(ref estado);
+            var valor2 = estado.Valor;
+
+            if (SaoNumericos(valor1, valor2))
+            {
+                estado.Valor = (LerNumero(valor1) != LerNumero(valor2));
+            }
+            else if (SaoTextos(valor1, valor2))
+            {
+                estado.Valor = (valor1.ToString() != valor2.ToString()) ;
+            }
+            else if (ContemTextos(valor1, valor2))
+            {
+                estado.Valor = (valor1.ToString() != valor2.ToString());
+            }
+            else
+            {
+                throw new Erro(this, "Tipos incompatíveis com a comparação");
+            }
         }
     }
 }

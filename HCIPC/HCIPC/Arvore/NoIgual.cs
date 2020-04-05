@@ -47,15 +47,15 @@ namespace HCIPC.Arvore
 
             if(SaoNumericos(valor1, valor2))
             {
-                estado.Valor = (LerNumero(valor1) == LerNumero(valor2)) ? 1 : 0;
+                estado.Valor = (LerNumero(valor1) == LerNumero(valor2)) ;
             }
             else if (SaoTextos(valor1, valor2))
             {
-                estado.Valor = (valor1.ToString() == valor2.ToString()) ? 1 : 0;
+                estado.Valor = (valor1.ToString() == valor2.ToString()) ;
             }
             else if (ContemTextos(valor1, valor2))
             {
-                estado.Valor = (valor1.ToString() == valor2.ToString()) ? 1 : 0;
+                estado.Valor = (valor1.ToString() == valor2.ToString()) ;
             }
             else
             {

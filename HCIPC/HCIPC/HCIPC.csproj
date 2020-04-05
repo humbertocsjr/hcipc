@@ -78,6 +78,13 @@
     <Compile Include="Arvore\NoMaiorIgualA.cs" />
     <Compile Include="Arvore\NoMenorIgualA.cs" />
     <Compile Include="Arvore\NoDiferente.cs" />
+    <Compile Include="Arvore\NoEntao.cs" />
+    <Compile Include="Arvore\NoFaca.cs" />
+    <Compile Include="Arvore\NoSeNao.cs" />
+    <Compile Include="Arvore\NoFimSe.cs" />
+    <Compile Include="Arvore\NoTipoLogico.cs" />
+    <Compile Include="Arvore\NoVerdadeiro.cs" />
+    <Compile Include="Arvore\NoFalso.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Arvore\" />

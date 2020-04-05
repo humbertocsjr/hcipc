@@ -59,13 +59,25 @@ namespace HCIPC.Arvore
             {
                 //Se for ponto flutuante (Real), converte e armazena
                 decimal valor = 0m;
-                if(decimal.TryParse(dados, out valor))
+                if (decimal.TryParse(dados, out valor))
                 {
                     estado.Valor = estado[Nome] = valor;
                 }
                 else
                 {
                     throw new Erro(this, "Esperada inserção de valor numérico real pelo usuário");
+                }
+            }
+            else if (estado[Nome] is bool)
+            {
+                //Se for logico
+                if (estado[Nome].ToString().ToLower() == "verdadeiro" || estado[Nome].ToString().ToLower() == "falso" || estado[Nome].ToString().ToLower() == "sim" || estado[Nome].ToString().ToLower() == "nao" || estado[Nome].ToString().ToLower() == "não")
+                {
+                    estado.Valor = estado[Nome] = estado[Nome].ToString().ToLower() == "verdadeiro" | estado[Nome].ToString().ToLower() == "sim";
+                }
+                else
+                {
+                    throw new Erro(this, "Esperada inserção de valor lógico pelo usuário");
                 }
             }
             else if (estado[Nome] is int)

@@ -426,6 +426,7 @@ namespace HCIPC
                     no = new NoTipoCaracter();
                     break;
                 case "inicio":
+                case "início":
                     no = new NoInicio();
                     break;
                 case "var":
@@ -451,6 +452,30 @@ namespace HCIPC
                     break;
                 case "*":
                     no = new NoMultiplicacao();
+                    break;
+                case "verdadeiro":
+                case "sim":
+                    no = new NoVerdadeiro();
+                    break;
+                case "falso":
+                case "nao":
+                case "não":
+                    no = new NoFalso();
+                    break;
+                case "entao":
+                case "então":
+                    no = new NoEntao();
+                    break;
+                case "senao":
+                case "senão":
+                    no = new NoSeNao();
+                    break;
+                case "faca":
+                case "faça":
+                    no = new NoFaca();
+                    break;
+                case "fimse":
+                    no = new NoFimSe();
                     break;
                 case "mod":
                 case "%":
@@ -577,6 +602,10 @@ namespace HCIPC
                                     {
                                         noTemp.ValorInicial = "";
                                     }
+                                    else if (proximo is NoTipoLogico)
+                                    {
+                                        noTemp.ValorInicial = false;
+                                    }
                                 }
                                 //Agrupa todas as declarações em um unico bloco
                                 no = new NoBloco()
@@ -649,6 +678,20 @@ namespace HCIPC
                                         {
                                             Condicao = nosFinal.First()
                                         };
+                                        proximo = LerNoTipo(typeof(NoEntao));
+                                        No sub;
+                                        //Processa e armazena os nós dentro do algoritmo ate chegar no 'fimalgoritmo'
+                                        while (!((sub = ProcessarNo()) is NoFimSe) && !(sub is NoSeNao))
+                                        {
+                                            ((NoSe)no).SeSim.Add(sub);
+                                        }
+                                        if(sub is NoSeNao)
+                                        {
+                                            while (!((sub = ProcessarNo()) is NoFimSe))
+                                            {
+                                                ((NoSe)no).SeNao.Add(sub);
+                                            }
+                                        }
                                         break;
                                     default:
                                         //TODO: Fazer chamar procedimento
