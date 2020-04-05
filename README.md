@@ -5,6 +5,42 @@ Licenciamento: Old 4-clause BSD
 Escolhida com o objetivo de ser uma licença aberta porém incompatível com a GPL, assim perturbando a vida de gente chata =)
 Requer a 'publicidade' da origem do código fonte, conforme a licença, o que impede que se misture código GPL com este.
 
+## Como usar
+
+Atualmente o Interpretador sempre olhará o arquivo teste.hcp que deve estar na mesma pasta que o executável.
+Bastando alterar o conteúdo do arquivo e executar novamente.
+
+## Exemplo de código compatível
+
+```portugol
+
+algoritmo "teste"
+
+var
+    n1, n2, soma: inteiro
+ 
+inicio
+ 
+    escreva("Digite o primeiro número..: ")
+    leia(n1)
+
+    escreva("Digite o segundo número...: ")
+    leia(n2)
+
+    soma <- n1 + n2;
+
+    escreval("Número 1..................: ", n1)
+    escreval("Número 2..................: ", n2)
+    escreval("Soma......................: ", soma)
+    escreval("Subtração.................: ", n1-n2)
+    escreval("Multiplicação.............: ", n1*n2)
+    escreval("Divisão...................: ", n1/n2)
+    escreval("Módulo....................: ", n1 mod n2)
+ 
+fimalgoritmo
+
+```
+
 ## Projeto
 
 Este projeto tem como objetivo de criar uma versão independente de plataforma de um interpretador de Pseudo-Código, compatível com o VisuAlg.
