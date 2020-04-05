@@ -74,19 +74,26 @@ public partial class MainWindow : Gtk.Window
     protected void OnAbrirBotaoClicked(object sender, EventArgs e)
     {
         Gtk.FileChooserDialog fcd = new Gtk.FileChooserDialog("Abrir Código Fonte", null, Gtk.FileChooserAction.Open);
+
+        fcd.SelectMultiple = false;
+
         fcd.AddButton(Gtk.Stock.Cancel, Gtk.ResponseType.Cancel);
         fcd.AddButton(Gtk.Stock.Open, Gtk.ResponseType.Ok);
+
         fcd.DefaultResponse = Gtk.ResponseType.Ok;
-        fcd.SelectMultiple = false;
+
         var f = new FileFilter()
         {
             Name = "Código Fonte"
         };
         f.AddPattern("*.hcp");
         fcd.AddFilter(f);
+
         Gtk.ResponseType response = (Gtk.ResponseType)fcd.Run();
         if (response == Gtk.ResponseType.Ok)
+        {
             editorCampo.Buffer.Text = File.ReadAllText(fcd.Filename);
+        }
         fcd.Destroy();
     }
 
@@ -96,20 +103,27 @@ public partial class MainWindow : Gtk.Window
         {
 
             Gtk.FileChooserDialog fcd = new Gtk.FileChooserDialog("Salvar Código Fonte", null, Gtk.FileChooserAction.Save);
+
+            fcd.SelectMultiple = false;
+
             fcd.AddButton(Gtk.Stock.Cancel, Gtk.ResponseType.Cancel);
             fcd.AddButton(Gtk.Stock.Open, Gtk.ResponseType.Ok);
+
             fcd.DefaultResponse = Gtk.ResponseType.Ok;
-            fcd.SelectMultiple = false;
+
             var f = new FileFilter()
             {
                 Name = "Código Fonte"
             };
             f.AddPattern("*.hcp");
             fcd.AddFilter(f);
+
             Gtk.ResponseType response = (Gtk.ResponseType)fcd.Run();
             if (response == Gtk.ResponseType.Ok)
+            {
                 Arquivo = fcd.Filename;
                 File.WriteAllText(fcd.Filename, editorCampo.Buffer.Text);
+            }
             fcd.Destroy();
         }
         else
