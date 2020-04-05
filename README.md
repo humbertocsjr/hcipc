@@ -35,14 +35,24 @@ inicio
     leia(n2)
 
     soma <- n1 + n2;
-
+    
     escreval("Número 1..................: ", n1)
     escreval("Número 2..................: ", n2)
     escreval("Soma......................: ", soma)
     escreval("Subtração.................: ", n1-n2)
     escreval("Multiplicação.............: ", n1*n2)
-    escreval("Divisão...................: ", n1/n2)
-    escreval("Módulo....................: ", n1 mod n2)
+    
+    se (n2 > 0) entao
+        escreval("Divisão...................: ", n1/n2)
+        escreval("Módulo....................: ", n1 mod n2)
+    senao
+        escreval("Divisão...................: FALHA")
+        escreval("Módulo....................: FALHA")
+    fimse
+    
+    escreval("Igual.....................: ", n1=n2)
+    escreval("Maior que.................: ", n1>n2)
+    escreval("Menor que.................: ", n1<n2)
  
 fimalgoritmo
 
@@ -70,7 +80,7 @@ Projeto inspirado nas aulas da Professora Débora, que deveria estar dando aula 
 - [x] Criação dos Nós basicos para declaração de variáveis e execução de contas matemáticas simples
 - [x] Criação do comando Escreva/Escreval
 - [x] Criação do comando Leia
-- [ ] Criação dos comandos SE e Expressões Condicionais
+- [x] Criação dos comandos SE e Expressões Condicionais
 - [ ] Criação dos comandos de repetição (PARA, ENQUANTO)
 - [ ] Diferenciar conteúdo do bloco VAR e do bloco INICIO, bloqueando a declaração de variáveis no código fonte
 - [ ] Implementar comandos matemáticos avançados (RAIZQ, etc)
