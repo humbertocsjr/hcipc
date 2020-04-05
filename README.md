@@ -15,7 +15,7 @@ Projeto inspirado nas aulas da Professora Débora, que deveria estar dando aula 
 - [x] Extração dos Arvore de Tokens apartir do Código Fonte
 - [x] Criação dos Nós basicos para declaração de variáveis e execução de contas matemáticas simples
 - [x] Criação do comando Escreva/Escreval
-- [ ] Criação do comando Leia
+- [x] Criação do comando Leia
 - [ ] Criação dos comandos SE e Expressões Condicionais
 - [ ] Criação dos comandos de repetição (PARA, ENQUANTO)
 - [ ] Diferenciar conteúdo do bloco VAR e do bloco INICIO, bloqueando a declaração de variáveis no código fonte
