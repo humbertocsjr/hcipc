@@ -23,6 +23,7 @@ namespace HCIPC.Arvore
                 if(estado.Valor != null) Console.Write(estado.Valor);
             }
             if (EnterAoFinal) Console.WriteLine();
+            estado.Valor = null;
         }
     }
 }

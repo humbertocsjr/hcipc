@@ -5,3 +5,10 @@
 /Users/humberto/Projects/HCIPC/HCIPC/obj/Debug/HCIPC.exe
 /Users/humberto/Projects/HCIPC/HCIPC/obj/Debug/HCIPC.pdb
 /Users/humberto/Projects/HCIPC/HCIPC/bin/Debug/teste.hcp
+/Users/humberto/Documents/GitHub/hcipc/HCIPC/HCIPC/bin/Debug/teste.hcp
+/Users/humberto/Documents/GitHub/hcipc/HCIPC/HCIPC/bin/Debug/HCIPC.exe
+/Users/humberto/Documents/GitHub/hcipc/HCIPC/HCIPC/bin/Debug/HCIPC.pdb
+/Users/humberto/Documents/GitHub/hcipc/HCIPC/HCIPC/obj/Debug/HCIPC.csprojAssemblyReference.cache
+/Users/humberto/Documents/GitHub/hcipc/HCIPC/HCIPC/obj/Debug/HCIPC.csproj.CoreCompileInputs.cache
+/Users/humberto/Documents/GitHub/hcipc/HCIPC/HCIPC/obj/Debug/HCIPC.exe
+/Users/humberto/Documents/GitHub/hcipc/HCIPC/HCIPC/obj/Debug/HCIPC.pdb

@@ -64,6 +64,7 @@
     <Compile Include="Arvore\NoTipoCaracter.cs" />
     <Compile Include="Arvore\NoBloco.cs" />
     <Compile Include="Arvore\NoLerVariavel.cs" />
+    <Compile Include="Arvore\NoLeia.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Arvore\" />

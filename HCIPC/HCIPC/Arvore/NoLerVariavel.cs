@@ -12,6 +12,10 @@ namespace HCIPC.Arvore
         protected override void Executar(ref EstadoExecucao estado)
         {
             estado.Valor = estado[Nome];
+            if(estado[Nome] == null)
+            {
+                throw new Erro(this, "Variável '" + Nome + "' não encontrada.");
+            }
         }
     }
 }

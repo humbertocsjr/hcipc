@@ -457,6 +457,12 @@ namespace HCIPC
                                             EnterAoFinal = true
                                         };
                                         break;
+                                    case "leia":
+                                        no = new NoLeia()
+                                        {
+                                            Nome = ((NoLerVariavel)nosFinal.First()).Nome
+                                        };
+                                        break;
                                     default:
                                         //TODO: Fazer chamar procedimento
                                         break;

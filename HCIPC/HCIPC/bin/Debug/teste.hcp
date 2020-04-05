@@ -1,12 +1,24 @@
-﻿ALGORITMO "teste"
+﻿algoritmo "teste"
 
 var
-    teste:inteiro
-
+    n1, n2, soma: inteiro
+ 
 inicio
+ 
+    escreva("Digite o primeiro número..: ")
+    leia(n1)
 
-    teste:= 1+2
-    teste <- teste + 2
-    escreval("Soma = ", teste)
+    escreva("Digite o segundo número...: ")
+    leia(n2)
 
+    soma <- n1 + n2;
+
+    escreval("Número 1.................: ", n1)
+    escreval("Número 2.................: ", n2)
+    escreval("Soma.....................: ", soma)
+    escreval("Subtração................: ", n1-n2)
+    escreval("Multiplicação............: ", n1*n2)
+    escreval("Divisão..................: ", n1/n2)
+    escreval("Módulo...................: ", n1 mod n2)
+ 
 fimalgoritmo
