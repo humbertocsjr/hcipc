@@ -9,6 +9,7 @@ Requer a 'publicidade' da origem do código fonte, conforme a licença, o que im
 
 ### Projeto HCAD - Ambiente de Desenvolvimento
 
+Requer o GTK.NET para executar no Windows
 Um editor de texto simples com funções de execução de código
 
 ### Projeto HCIPC - Interpretador de Pseudo-Código
