@@ -53,6 +53,21 @@ inicio
     escreval("Igual.....................: ", n1=n2)
     escreval("Maior que.................: ", n1>n2)
     escreval("Menor que.................: ", n1<n2)
+    
+    escreva("Contar até 10.............:")
+    n1 <- 0
+
+    enquanto (n1 < 5) faca
+        escreva(" ", n1 + 1)
+        n1 <- n1 + 1
+    fimenquanto
+
+    repita
+        escreva(" ", n1 + 1)
+        n1 <- n1 + 1
+    ate (n1 = 10)
+
+    escreval("")
  
 fimalgoritmo
 
@@ -81,7 +96,8 @@ Projeto inspirado nas aulas da Professora Débora, que deveria estar dando aula 
 - [x] Criação do comando Escreva/Escreval
 - [x] Criação do comando Leia
 - [x] Criação dos comandos SE e Expressões Condicionais
-- [ ] Criação dos comandos de repetição (PARA, ENQUANTO)
+- [x] Criação dos comandos de repetição (REPITA, ENQUANTO)
+- [ ] Criação dos comandos de repetição (PARA)
 - [ ] Diferenciar conteúdo do bloco VAR e do bloco INICIO, bloqueando a declaração de variáveis no código fonte
 - [ ] Implementar comandos matemáticos avançados (RAIZQ, etc)
 - [ ] Implementar Procedimentos e Funções
