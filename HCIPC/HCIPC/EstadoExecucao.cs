@@ -72,7 +72,7 @@ namespace HCIPC
                 {
                     return NivelGlobal[nome.ToLower()];
                 }
-                else if(Variaveis.ContainsKey(nome))
+                else if(Variaveis.ContainsKey(nome.ToLower()))
                 {
                     return Variaveis[nome.ToLower()];
                 }
@@ -84,11 +84,11 @@ namespace HCIPC
             set
             {
                 //Caso exista como variavel global, grava o valor, senão grava numa existente local, senão cria uma variável
-                if(NivelGlobal!=null && NivelGlobal[nome] != null)
+                if(NivelGlobal != null && NivelGlobal[nome.ToLower()] != null)
                 {
-                    NivelGlobal[nome] = value;
+                    NivelGlobal[nome.ToLower()] = value;
                 }
-                else if(Variaveis.ContainsKey(nome))
+                else if(Variaveis.ContainsKey(nome.ToLower()))
                 {
                     Variaveis[nome.ToLower()] = value;
                 }

@@ -28,16 +28,29 @@ inicio
     escreval("Igual.....................: ", n1=n2)
     escreval("Maior que.................: ", n1>n2)
     escreval("Menor que.................: ", n1<n2)
+
     escreva("Contar até 10.............:")
     n1 <- 0
+
     enquanto (n1 < 5) faca
         escreva(" ", n1 + 1)
         n1 <- n1 + 1
     fimenquanto
+
     repita
         escreva(" ", n1 + 1)
         n1 <- n1 + 1
     ate (n1 = 10)
+
+    escreval("")
+
+    escreva("Contagem regressiva.......:")
+
+    enquanto (n1 >= 0) faca
+        escreva(" ", n1)
+        n1 <- n1 - 1
+    fimenquanto
+
     escreval("")
  
 fimalgoritmo
