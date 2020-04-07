@@ -46,6 +46,8 @@ inicio
 
     escreva("Contagem regressiva.......:")
 
+    n1 <- n2
+    
     enquanto (n1 >= 0) faca
         escreva(" ", n1)
         n1 <- n1 - 1

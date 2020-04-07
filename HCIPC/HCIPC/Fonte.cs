@@ -370,7 +370,7 @@ namespace HCIPC
                         nos.First() is NoMaiorQue |
                         nos.First() is NoMaiorIgualA |
                         nos.First() is NoMenorQue |
-                        nos.First() is NoMaiorIgualA
+                        nos.First() is NoMenorIgualA
                     )
                 {
                     var noMatematica = nos.First();
