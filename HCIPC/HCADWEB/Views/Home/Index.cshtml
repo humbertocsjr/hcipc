@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edito de Código</title>
+    <style type="text/css" media="screen">
+        #editor
+        {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 200px;
+            left: 0;
+        }
+        #copyright {
+            position: absolute;
+            height: 200px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow-y: scroll;
+            background-color: #272822;
+            color: white;
+            font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="editor">
+algoritmo "teste"
+
+var
+    n1, n2, soma: inteiro
+
+funcao multiplicaPor2 (valor:inteiro)
+var
+    teste1:inteiro
+inicio
+    teste1 <- 2
+    teste1 <- valor * teste1
+fimfuncao
+ 
+inicio
+    escreva("Digite o primeiro número..: ")
+    leia(n1)
+
+    escreva("Digite o segundo número...: ")
+    leia(n2)
+
+    soma <- (n1 + n2);
+
+    escreval("Número 1..................: ", n1)
+    escreval("Número 2..................: ", n2)
+    escreval("Soma......................: ", soma)
+    escreval("Subtração.................: ", n1-n2)
+    escreval("Multiplicação.............: ", n1*n2)
+    escreval("Multiplica por 2..........: ", multiplicaPor2(n1))
+    se (n2 > 0) entao
+        escreval("Divisão...................: ", n1/n2)
+        escreval("Módulo....................: ", n1 mod n2)
+    senao
+        escreval("Divisão...................: FALHA")
+        escreval("Módulo....................: FALHA")
+    fimse
+    escreval("Igual.....................: ", n1=n2)
+    escreval("Maior que.................: ", n1>n2)
+    escreval("Menor que.................: ", n1<n2)
+
+    escreva("Contar até 10.............:")
+    n1 <- 0
+
+    enquanto (n1 < 5) faca
+        escreva(" ", n1 + 1)
+        n1 <- n1 + 1
+    fimenquanto
+
+    repita
+        escreva(" ", n1 + 1)
+        n1 <- n1 + 1
+    ate (n1 = 10)
+
+    escreval("")
+
+    escreva("Contagem regressiva.......:")
+
+    n1 <- n2
+    
+    enquanto (n1 >= 0) faca
+        escreva(" ", n1)
+        n1 <- n1 - 1
+    fimenquanto
+
+    escreval("")
+ 
+fimalgoritmo
+    </div>
+    <div id="copyright">
+        <b>Informações do projeto:</b><br />
+        O Editor de Texto utilizado é o ACE encontrado no site https://ace.c9.io/. <br />
+        Esta página contém trabalhos derivados do projeto ACE.<br />
+        <br />
+        &nbsp;&nbsp;Copyright (c) 2012, Ajax.org B.V.<br />
+        &nbsp;&nbsp;All rights reserved.<br />
+        <br />
+        O Interpretador de Pseudo-Código é baseado no Projeto Humberto Costa | Interpretador de Pseudo-Código encontrado no site https://github.com/humbertocsjr/hcipc<br />
+        <br />
+        &nbsp;&nbsp;Copyright (c) 2020<br />
+        &nbsp;&nbsp;Humberto Costa dos Santos Junior.  All rights reserved.<br />
+        &nbsp;&nbsp;This product includes software developed by Humberto Costa dos Santos Junior and its contributors.<br />
+
+
+    </div>
+    <script src="Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/hcpc");</script>
+</body>
+</html>

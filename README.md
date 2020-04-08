@@ -1,16 +1,15 @@
 # Humberto Costa | Interpretador de Pseudo-Código
 
 Licenciamento: Old 4-clause BSD
-
-Escolhida com o objetivo de ser uma licença aberta porém incompatível com a GPL, assim perturbando a vida de gente chata =)
 Requer a 'publicidade' da origem do código fonte, conforme a licença, o que impede que se misture código GPL com este.
+
+Foi incorporado o Projeto ACE (https://github.com/ajaxorg/ace-builds) na interface Web do Projeto HCADWEB, este é licenciado em 3-clause BSD
 
 ## Como usar
 
-### Projeto HCAD - Ambiente de Desenvolvimento
+### Projeto HCADWEB - Ambiente de Desenvolvimento Web
 
-Requer o GTK.NET para executar no Windows
-Um editor de texto simples com funções de execução de código
+Em Construção
 
 ### Projeto HCIPC - Interpretador de Pseudo-Código
 

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCIPC", "HCIPC\HCIPC.csproj", "{AA583944-AB32-47E5-9FD8-F4192F398A71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCAD", "HCAD\HCAD.csproj", "{52D6C984-2B51-4E84-9BDA-E6E9C365BC14}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCADWEB", "HCADWEB\HCADWEB.csproj", "{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +15,9 @@ Global
 		{AA583944-AB32-47E5-9FD8-F4192F398A71}.Debug|anycpu.Build.0 = Debug|anycpu
 		{AA583944-AB32-47E5-9FD8-F4192F398A71}.Release|anycpu.ActiveCfg = Release|anycpu
 		{AA583944-AB32-47E5-9FD8-F4192F398A71}.Release|anycpu.Build.0 = Release|anycpu
-		{52D6C984-2B51-4E84-9BDA-E6E9C365BC14}.Debug|anycpu.ActiveCfg = Debug|anycpu
-		{52D6C984-2B51-4E84-9BDA-E6E9C365BC14}.Debug|anycpu.Build.0 = Debug|anycpu
-		{52D6C984-2B51-4E84-9BDA-E6E9C365BC14}.Release|anycpu.ActiveCfg = Release|anycpu
-		{52D6C984-2B51-4E84-9BDA-E6E9C365BC14}.Release|anycpu.Build.0 = Release|anycpu
+		{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}.Debug|anycpu.ActiveCfg = Debug|Any CPU
+		{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}.Debug|anycpu.Build.0 = Debug|Any CPU
+		{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}.Release|anycpu.ActiveCfg = Release|Any CPU
+		{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}.Release|anycpu.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
