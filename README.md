@@ -25,23 +25,30 @@ algoritmo "teste"
 
 var
     n1, n2, soma: inteiro
+
+funcao multiplicaPor2 (valor:inteiro)
+var
+    teste1:inteiro
+inicio
+    teste1 <- 2
+    teste1 <- valor * teste1
+fimfuncao
  
 inicio
- 
     escreva("Digite o primeiro número..: ")
     leia(n1)
 
     escreva("Digite o segundo número...: ")
     leia(n2)
 
-    soma <- n1 + n2;
-    
+    soma <- (n1 + n2);
+
     escreval("Número 1..................: ", n1)
     escreval("Número 2..................: ", n2)
     escreval("Soma......................: ", soma)
     escreval("Subtração.................: ", n1-n2)
     escreval("Multiplicação.............: ", n1*n2)
-    
+    escreval("Multiplica por 2..........: ", multiplicaPor2(n1))
     se (n2 > 0) entao
         escreval("Divisão...................: ", n1/n2)
         escreval("Módulo....................: ", n1 mod n2)
@@ -49,11 +56,10 @@ inicio
         escreval("Divisão...................: FALHA")
         escreval("Módulo....................: FALHA")
     fimse
-    
     escreval("Igual.....................: ", n1=n2)
     escreval("Maior que.................: ", n1>n2)
     escreval("Menor que.................: ", n1<n2)
-    
+
     escreva("Contar até 10.............:")
     n1 <- 0
 
@@ -66,6 +72,17 @@ inicio
         escreva(" ", n1 + 1)
         n1 <- n1 + 1
     ate (n1 = 10)
+
+    escreval("")
+
+    escreva("Contagem regressiva.......:")
+
+    n1 <- n2
+    
+    enquanto (n1 >= 0) faca
+        escreva(" ", n1)
+        n1 <- n1 - 1
+    fimenquanto
 
     escreval("")
  
@@ -100,7 +117,7 @@ Projeto inspirado nas aulas da Professora Débora, que deveria estar dando aula 
 - [ ] Criação dos comandos de repetição (PARA)
 - [ ] Diferenciar conteúdo do bloco VAR e do bloco INICIO, bloqueando a declaração de variáveis no código fonte
 - [ ] Implementar comandos matemáticos avançados (RAIZQ, etc)
-- [ ] Implementar Procedimentos e Funções
+- [x] Implementar Procedimentos e Funções
 
 ## Objetivos Auxiliares
 
