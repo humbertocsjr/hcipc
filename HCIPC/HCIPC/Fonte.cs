@@ -289,6 +289,22 @@ namespace HCIPC
                 no = nos.First();
                 nos.Remove(nos.First());
             }
+            else if (nos.First() is NoAbreParenteses)
+            {
+                nos.Remove(nos.First());
+                no = ProcessarExpressao(ref nos);
+                if(nos.First() is NoFechaParenteses) nos.Remove(nos.First());
+            }
+            else if (nos.First() is NoBloco | nos.First() is NoDeclararVariavel)
+            {
+                no = nos.First();
+                nos.Remove(nos.First());
+            }
+            else if (nos.First() is NoChamaFuncaoProcedimento )
+            {
+                no = nos.First();
+                nos.Remove(nos.First());
+            }
             return no;
 
         }
@@ -298,6 +314,10 @@ namespace HCIPC
             //Organiza o segundo nivel da árvore de nós de uma expressão
             No no = null;
             no = ProcessarExpressao5(ref nos);
+            if(no is null)
+            {
+                return no;
+            }
             if (nos.Any())
             {
                 if (nos.First() is NoSoma)
@@ -305,7 +325,7 @@ namespace HCIPC
                     var noMatematica = nos.First();
                     nos.Remove(nos.First());
                     ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
-                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao4(ref nos);
                     no = noMatematica;
                 }
                 else if (nos.First() is NoSubtracao)
@@ -313,7 +333,7 @@ namespace HCIPC
                     var noMatematica = nos.First();
                     nos.Remove(nos.First());
                     ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
-                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao4(ref nos);
                     no = noMatematica;
                 }
             }
@@ -326,6 +346,10 @@ namespace HCIPC
             //Organiza o primeiro nivel da árvore de nós de uma expressão
             No no = null;
             no = ProcessarExpressao4(ref nos);
+            if (no is null)
+            {
+                return no;
+            }
             if (nos.Any())
             {
                 if (nos.First() is NoMultiplicacao)
@@ -333,7 +357,7 @@ namespace HCIPC
                     var noMatematica = nos.First();
                     nos.Remove(nos.First());
                     ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
-                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao3(ref nos);
                     no = noMatematica;
                 }
                 else if (nos.First() is NoDivisao)
@@ -341,7 +365,7 @@ namespace HCIPC
                     var noMatematica = nos.First();
                     nos.Remove(nos.First());
                     ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
-                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao3(ref nos);
                     no = noMatematica;
                 }
                 else if (nos.First() is NoModulo)
@@ -349,7 +373,7 @@ namespace HCIPC
                     var noMatematica = nos.First();
                     nos.Remove(nos.First());
                     ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
-                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao3(ref nos);
                     no = noMatematica;
                 }
             }
@@ -361,6 +385,10 @@ namespace HCIPC
             //Organiza o primeiro nivel da árvore de nós de uma expressão
             No no = null;
             no = ProcessarExpressao3(ref nos);
+            if (no is null)
+            {
+                return no;
+            }
             if (nos.Any())
             {
                 if
@@ -376,7 +404,7 @@ namespace HCIPC
                     var noMatematica = nos.First();
                     nos.Remove(nos.First());
                     ((NoOperacaoMatematicaBase)noMatematica).Item1 = no;
-                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao(ref nos);
+                    ((NoOperacaoMatematicaBase)noMatematica).Item2 = ProcessarExpressao2(ref nos);
                     no = noMatematica;
                 }
             }
@@ -388,6 +416,10 @@ namespace HCIPC
             //Organiza o primeiro nivel da árvore de nós de uma expressão
             No no = null;
             no = ProcessarExpressao2(ref nos);
+            if (no is null)
+            {
+                return no;
+            }
             if (nos.Any())
             {
                 if
@@ -446,6 +478,98 @@ namespace HCIPC
                             ((NoAlgoritmo)no).Nos.Add(sub);
                         }
                     }
+                    break;
+                case "funcao":
+                case "função":
+                case "procedimento":
+                    {
+                        no = new NoFuncaoProcedimento()
+                        {
+                            RetornaValor = trecho.ToLower() != "procedimento"
+                        };
+                        var pars = new List<NoDeclararVariavel>();
+                        No sub;
+                        sub = ProcessarNo();
+                        //Quando declarado no formato [procedimento NOME (PAR1, PAR2)] se le como um no do tipo NoChamaFuncaoProcedimento
+                        if(sub is NoChamaFuncaoProcedimento)
+                        {
+                            ((NoFuncaoProcedimento)no).Nome = ((NoChamaFuncaoProcedimento)sub).Nome;
+                            foreach (var par in ((NoChamaFuncaoProcedimento)sub).Parametros)
+                            {
+                                if(par is NoBloco)
+                                {
+                                    foreach (var par1 in ((NoBloco)par).Nos)
+                                    {
+                                        if(par1 is NoDeclararVariavel)
+                                        {
+                                            pars.Add((NoDeclararVariavel)par1);
+                                        }
+                                    }
+                                }
+                                else if(par is NoDeclararVariavel)
+                                {
+                                    pars.Add((NoDeclararVariavel)par);
+                                }
+                                else if(par is NoVirgula)
+                                {
+                                    //Ignora
+                                }
+                                else
+                                {
+                                    throw new Erro(par, "Esperado uma declaração de variável como parametro da Função/Procedimento");
+                                }
+                            }
+                        }
+                        else if(sub is NoLerVariavel)
+                        {
+                            ((NoFuncaoProcedimento)no).Nome = ((NoLerVariavel)sub).Nome;
+                        }
+                        else
+                        {
+                            throw new Erro(sub, "Esperado o Nome da Função/Procedimento");
+                        }
+                        sub = ProcessarNo();
+                        if(sub is NoDoisPontos)
+                        {
+                            if (sub is NoTipoInteiro)
+                            {
+                                ((NoFuncaoProcedimento)no).TipoRetornado = typeof(int);
+                            }
+                            else if (sub is NoTipoReal)
+                            {
+                                ((NoFuncaoProcedimento)no).TipoRetornado = typeof(decimal);
+                            }
+                            else if (sub is NoTipoCaracter)
+                            {
+                                ((NoFuncaoProcedimento)no).TipoRetornado = typeof(string);
+                            }
+                            else if (sub is NoTipoLogico)
+                            {
+                                ((NoFuncaoProcedimento)no).TipoRetornado = typeof(bool);
+                            }
+                            else
+                            {
+                                throw new Erro(sub, "Esperado um tipo de variável");
+                            }
+                        }
+                        else
+                        {
+                            DesfazerUltimoLerTrecho();
+                        }
+                        foreach (var par in pars)
+                        {
+                            ((NoFuncaoProcedimento)no).Parametros.Add(par.Nome, par.ValorInicial.GetType());
+                        }
+                        while (!((sub = ProcessarNo()) is NoFimFuncaoProcedimento))
+                        {
+                            ((NoFuncaoProcedimento)no).Nos.Add(sub);
+                        }
+                    }
+                    break;
+                case "fimfuncao":
+                case "fimfunção":
+                case "fimprocedimento":
+                    no = new NoFimFuncaoProcedimento();
                     break;
                 case "fimalgoritmo":
                     no = new NoFimAlgoritmo();
@@ -692,6 +816,10 @@ namespace HCIPC
                                     {
                                         noTemp.ValorInicial = false;
                                     }
+                                    else
+                                    {
+                                        throw new Erro(proximo, "Esperado um tipo de variável");
+                                    }
                                 }
                                 //Agrupa todas as declarações em um unico bloco
                                 no = new NoBloco()
@@ -797,7 +925,13 @@ namespace HCIPC
                                         }
                                         break;
                                     default:
-                                        //TODO: Fazer chamar procedimento
+                                        {
+                                            no = new NoChamaFuncaoProcedimento()
+                                            {
+                                                Nome = trecho,
+                                                Parametros = nosFinal
+                                            };
+                                        }
                                         break;
                                 }
                             }

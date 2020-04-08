@@ -2,22 +2,30 @@
 
 var
     n1, n2, soma: inteiro
+
+funcao multiplicaPor2 (valor:inteiro)
+var
+    teste1:inteiro
+inicio
+    teste1 <- 2
+    teste1 <- valor * teste1
+fimfuncao
  
 inicio
- 
     escreva("Digite o primeiro número..: ")
     leia(n1)
 
     escreva("Digite o segundo número...: ")
     leia(n2)
 
-    soma <- n1 + n2;
+    soma <- (n1 + n2);
 
     escreval("Número 1..................: ", n1)
     escreval("Número 2..................: ", n2)
     escreval("Soma......................: ", soma)
     escreval("Subtração.................: ", n1-n2)
     escreval("Multiplicação.............: ", n1*n2)
+    escreval("Multiplica por 2..........: ", multiplicaPor2(n1))
     se (n2 > 0) entao
         escreval("Divisão...................: ", n1/n2)
         escreval("Módulo....................: ", n1 mod n2)

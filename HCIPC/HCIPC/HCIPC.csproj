@@ -91,6 +91,9 @@
     <Compile Include="Arvore\NoFimEnquanto.cs" />
     <Compile Include="Arvore\NoAte.cs" />
     <Compile Include="Arvore\NoRepita.cs" />
+    <Compile Include="Arvore\NoFuncaoProcedimento.cs" />
+    <Compile Include="Arvore\NoFimFuncaoProcedimento.cs" />
+    <Compile Include="Arvore\NoChamaFuncaoProcedimento.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Arvore\" />

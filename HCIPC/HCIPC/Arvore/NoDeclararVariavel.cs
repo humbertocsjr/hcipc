@@ -45,6 +45,7 @@ namespace HCIPC.Arvore
         {
             //Declara uma variável, armazenando um valor genérico dela (normalmente "0), para que seja comparado no futuro os tipos de variável
             estado[Nome] = ValorInicial;
+            estado.Valor = ValorInicial;
         }
     }
 }

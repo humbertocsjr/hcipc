@@ -34,22 +34,30 @@ using System.Collections.Generic;
 
 namespace HCIPC.Arvore
 {
-    public class NoAlgoritmo : NoBlocoBase
+    public class NoFuncaoProcedimento : NoBlocoBase
     {
+        public bool RetornaValor { get; set; }
+        public Type TipoRetornado { get; set; }
         public string Nome { get; set; }
+        public Dictionary<string, Type> Parametros { get; set; }
 
-        public NoAlgoritmo() : base()
+        public NoFuncaoProcedimento()
         {
+            Parametros = new Dictionary<string, Type>();
+            RetornaValor = false;
+            TipoRetornado = null;
+            Nome = "";
         }
 
         protected override void Executar(ref EstadoExecucao estado)
         {
-            estado.Algoritmo = Nome;
+            estado.RegistrarRotinaLocal(Nome, this);
+        }
+
+        public void ExecutarRotina(ref EstadoExecucao estado)
+        {
             foreach (var no in Nos)
             {
-                //TODO: Verificar se for do tipo VAR ou INICIO, executar, ignorando funcoes e procedimentos
-
-                //Executa o comando na lista de comandos dentro do Algoritmo
                 no.ExecutarNo(ref estado);
             }
         }
