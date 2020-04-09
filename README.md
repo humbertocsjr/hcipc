@@ -5,6 +5,8 @@ Requer a 'publicidade' da origem do código fonte, conforme a licença, o que im
 
 Foi incorporado o Projeto ACE (https://github.com/ajaxorg/ace-builds) na interface Web do Projeto HCADWEB, este é licenciado em 3-clause BSD
 
+![Imagem do HCADWEB executando um exemplo](https://github.com/humbertocsjr/hcipc/raw/master/imagem.png)
+
 ## Como usar
 
 ### Projeto HCADWEB - Ambiente de Desenvolvimento Web
