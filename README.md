@@ -9,7 +9,7 @@ Foi incorporado o Projeto ACE (https://github.com/ajaxorg/ace-builds) na interfa
 
 ### Projeto HCADWEB - Ambiente de Desenvolvimento Web
 
-Em Construção
+Para executa-lo, inicie os Projetos HCIPCWEB e HCADWEB em paralelo, abrirá no navegador o endereço http://127.0.0.1:8080, onde poderá executar códigos pelo navegador
 
 ### Projeto HCIPC - Interpretador de Pseudo-Código
 

@@ -442,6 +442,7 @@ namespace HCIPC
         {
             //Processa o nó raiz e o armazena
             No no = ProcessarNo();
+            while (no is NoFimDeLinha) no = ProcessarNo();
             NoRaiz = no;
             return no;
         }

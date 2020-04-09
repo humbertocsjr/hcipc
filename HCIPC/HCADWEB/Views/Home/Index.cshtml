@@ -7,11 +7,34 @@
         {
             position: absolute;
             top: 0;
-            right: 0;
+            right: 50%;
             bottom: 200px;
             left: 0;
         }
-        #copyright {
+        #console {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 50%;
+            bottom: 200px;
+            background-color: #272822;
+            color: white;
+            font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+        }
+        #conteudo {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            left: 10px;
+            bottom: 10px;
+            overflow-y: scroll;
+            background-color: black;
+            border: solid 1px green;
+            color: green;
+            font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+        }
+        #copyright
+        {
             position: absolute;
             height: 200px;
             right: 0;
@@ -36,8 +59,8 @@ funcao multiplicaPor2 (valor:inteiro)
 var
     teste1:inteiro
 inicio
-    teste1 <- 2
-    teste1 <- valor * teste1
+    teste1 := 2
+    teste1 := valor * teste1
 fimfuncao
  
 inicio
@@ -47,7 +70,7 @@ inicio
     escreva("Digite o segundo número...: ")
     leia(n2)
 
-    soma <- (n1 + n2);
+    soma := (n1 + n2)
 
     escreval("Número 1..................: ", n1)
     escreval("Número 2..................: ", n2)
@@ -62,37 +85,41 @@ inicio
         escreval("Divisão...................: FALHA")
         escreval("Módulo....................: FALHA")
     fimse
-    escreval("Igual.....................: ", n1=n2)
-    escreval("Maior que.................: ", n1>n2)
-    escreval("Menor que.................: ", n1<n2)
+    escreval("Igual.....................: ", n1 = n2)
+    escreval("Maior que.................: ", n1 > n2)
+    escreval("Menor que.................: ", n1 < n2)
 
     escreva("Contar até 10.............:")
-    n1 <- 0
+    n1 := 0
 
     enquanto (n1 < 5) faca
         escreva(" ", n1 + 1)
-        n1 <- n1 + 1
+        n1 := n1 + 1
     fimenquanto
 
     repita
         escreva(" ", n1 + 1)
-        n1 <- n1 + 1
+        n1 := n1 + 1
     ate (n1 = 10)
 
     escreval("")
 
     escreva("Contagem regressiva.......:")
 
-    n1 <- n2
+    n1 := n2
     
     enquanto (n1 >= 0) faca
         escreva(" ", n1)
-        n1 <- n1 - 1
+        n1 := n1 - 1
     fimenquanto
 
     escreval("")
  
 fimalgoritmo
+    </div>
+    <div id="console">
+        <button onclick="executar(); return false;">Executar</button>
+        <pre id="conteudo"></pre>
     </div>
     <div id="copyright">
         <b>Informações do projeto:</b><br />
@@ -111,8 +138,61 @@ fimalgoritmo
 
     </div>
     <script src="Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>var editor = ace.edit("editor");
+    <script>
+        var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/hcpc");</script>
+        editor.session.setMode("ace/mode/hcpc");
+
+        var conex = new WebSocket("ws://127.0.0.1:19890");
+        conex.onmessage = function (evento)
+        {
+            var dados = JSON.parse(evento.data);
+            switch (dados.Tipo)
+            {
+                case "escreva":
+                    {
+                        var theDiv = document.getElementById("conteudo");
+                        var content = document.createTextNode(dados.Mensagem);
+                        theDiv.appendChild(content);
+                        theDiv.scrollTop = theDiv.scrollHeight;
+                    }
+                    break;
+                case "erro":
+                    {
+                        var theDiv = document.getElementById("conteudo");
+                        var content = document.createTextNode("ERRO: Linha: " + dados.Linha.toString() + " Coluna: " + dados.Coluna.toString() + " - " + dados.Mensagem);
+                        theDiv.appendChild(content);
+                        theDiv.scrollTop = theDiv.scrollHeight;
+                    }
+                    break;
+                case "leia":
+                    {
+                        conex.send(JSON.stringify(
+                            {
+                                "Tipo": "entrada",
+                                "Mensagem": "0"
+                            }));
+                        var theDiv = document.getElementById("conteudo");
+                        var content = document.createTextNode("0\n");
+                        theDiv.appendChild(content);
+                        theDiv.scrollTop = theDiv.scrollHeight;
+                    }
+            }
+        }
+
+        function executar()
+        {
+            conex.send(JSON.stringify(
+                {
+                    "Tipo": "codigo",
+                    "Codigo": editor.getValue()
+                }));
+
+            conex.send(JSON.stringify(
+                {
+                    "Tipo": "executar"
+                }));
+        }
+    </script>
 </body>
 </html>

@@ -56,7 +56,7 @@ namespace HCIPC
         //Local onde fica as variáveis locais
         private Dictionary<string, object> Variaveis { get; set; }
         //Rotinas publicas, [Nome Armazenado em Minusculas com o nome do Algoritmo na frente com um ponto separando]
-        private static Dictionary<string, NoFuncaoProcedimento> Rotinas { get; set; }
+        private Dictionary<string, NoFuncaoProcedimento> Rotinas { get; set; }
 
         public EstadoExecucao()
         {
@@ -119,7 +119,8 @@ namespace HCIPC
                     //TODO: Nao funciona com bibliotecas externas, teria que toda vez que carregar uma biblioteca externa executa-la para que sejam inicializadas as variaveis 
                     NivelGlobal = NivelGlobal == null ? this : NivelGlobal,
                     Interpretador = Interpretador,
-                    Algoritmo = algoritmo
+                    Algoritmo = algoritmo,
+                    Rotinas = Rotinas
                 };
                 int i = 0;
                 if(parametros.Length != Rotinas[nomeRotina].Parametros.Count)

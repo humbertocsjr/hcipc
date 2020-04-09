@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCIPC", "HCIPC\HCIPC.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCADWEB", "HCADWEB\HCADWEB.csproj", "{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCIPCWEB", "HCIPCWEB\HCIPCWEB.csproj", "{4C1988DD-6B28-4A7E-A5A7-12CB66422BB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|anycpu = Debug|anycpu
@@ -19,5 +21,9 @@ Global
 		{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}.Debug|anycpu.Build.0 = Debug|Any CPU
 		{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}.Release|anycpu.ActiveCfg = Release|Any CPU
 		{4E4E0782-2CBC-4C1B-8370-0E34227EAA5B}.Release|anycpu.Build.0 = Release|Any CPU
+		{4C1988DD-6B28-4A7E-A5A7-12CB66422BB4}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{4C1988DD-6B28-4A7E-A5A7-12CB66422BB4}.Debug|anycpu.Build.0 = Debug|anycpu
+		{4C1988DD-6B28-4A7E-A5A7-12CB66422BB4}.Release|anycpu.ActiveCfg = Release|anycpu
+		{4C1988DD-6B28-4A7E-A5A7-12CB66422BB4}.Release|anycpu.Build.0 = Release|anycpu
 	EndGlobalSection
 EndGlobal
