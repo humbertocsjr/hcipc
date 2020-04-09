@@ -36,12 +36,14 @@ namespace HCIPCWEB
             {
                 Conexao = conex
             }) ;
+            Console.WriteLine(conex.ConnectionInfo.Id.ToString() + " - Aberta conexão do IP" + conex.ConnectionInfo.ClientIpAddress.ToString());
 
         }
 
         public static void AoFechar(IWebSocketConnection conex)
         {
             Sessoes.Remove(conex);
+            Console.WriteLine(conex.ConnectionInfo.Id.ToString() + " - Fechada conexão do IP" + conex.ConnectionInfo.ClientIpAddress.ToString());
         }
 
         public static void AoReceber(IWebSocketConnection conex, string mensagem)
@@ -49,6 +51,7 @@ namespace HCIPCWEB
             try
             {
                 Sessoes[conex].ProcessarRetorno(mensagem);
+                Console.WriteLine(conex.ConnectionInfo.Id.ToString() + " - Recebida mensagem conexão do IP" + conex.ConnectionInfo.ClientIpAddress.ToString());
             }
             catch (Exception ex)
             {
