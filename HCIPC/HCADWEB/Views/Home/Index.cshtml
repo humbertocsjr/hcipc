@@ -1,19 +1,31 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Edito de Código</title>
+    <title>Editor de Pseudo-Código</title>
+    <meta charset="utf-8" />
     <style type="text/css" media="screen">
-        #editor
-        {
+        #titulo {
             position: absolute;
             top: 0;
+            right: 0;
+            height: 40px;
+            left: 0;
+            background-color: #272822;
+            color: white;
+            font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+        }
+
+        #editor {
+            position: absolute;
+            top: 40px;
             right: 50%;
             bottom: 200px;
             left: 0;
         }
+
         #console {
             position: absolute;
-            top: 0;
+            top: 40px;
             right: 0;
             left: 50%;
             bottom: 200px;
@@ -21,6 +33,15 @@
             color: white;
             font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
         }
+
+        #entrada {
+            background-color: black;
+            border: solid 0px green;
+            border-bottom: solid 1px green;
+            color: #4AF626;
+            font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+        }
+
         #conteudo {
             position: absolute;
             top: 50px;
@@ -30,11 +51,11 @@
             overflow-y: scroll;
             background-color: black;
             border: solid 1px green;
-            color: green;
+            color: #4AF626;
             font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
         }
-        #copyright
-        {
+
+        #copyright {
             position: absolute;
             height: 200px;
             right: 0;
@@ -42,83 +63,92 @@
             left: 0;
             overflow-y: scroll;
             background-color: #272822;
-            color: white;
+            color: gray;
             font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
         }
     </style>
 </head>
 <body>
-
+    <div id="titulo">
+        <h3>Editor Online de Pseudo-Código</h3>
+    </div>
     <div id="editor">
-algoritmo "teste"
+        algoritmo "teste"
 
-var
-    n1, n2, soma: inteiro
+        var
+        n1, n2, soma: inteiro
 
-funcao multiplicaPor2 (valor:inteiro)
-var
-    teste1:inteiro
-inicio
-    teste1 := 2
-    teste1 := valor * teste1
-fimfuncao
- 
-inicio
-    escreva("Digite o primeiro número..: ")
-    leia(n1)
+        funcao multiplicaPor2 (valor:inteiro)
+        var
+        teste1:inteiro
+        inicio
+        teste1 := 2
+        teste1 := valor * teste1
+        fimfuncao
 
-    escreva("Digite o segundo número...: ")
-    leia(n2)
+        inicio
+        escreva("Digite o primeiro número..: ")
+        leia(n1)
 
-    soma := (n1 + n2)
+        escreva("Digite o segundo número...: ")
+        leia(n2)
 
-    escreval("Número 1..................: ", n1)
-    escreval("Número 2..................: ", n2)
-    escreval("Soma......................: ", soma)
-    escreval("Subtração.................: ", n1-n2)
-    escreval("Multiplicação.............: ", n1*n2)
-    escreval("Multiplica por 2..........: ", multiplicaPor2(n1))
-    se (n2 > 0) entao
+        soma := (n1 + n2)
+
+        escreval("Número 1..................: ", n1)
+        escreval("Número 2..................: ", n2)
+        escreval("Soma......................: ", soma)
+        escreval("Subtração.................: ", n1-n2)
+        escreval("Multiplicação.............: ", n1*n2)
+        escreval("Multiplica por 2..........: ", multiplicaPor2(n1))
+        se (n2 > 0) entao
         escreval("Divisão...................: ", n1/n2)
         escreval("Módulo....................: ", n1 mod n2)
-    senao
+        senao
         escreval("Divisão...................: FALHA")
         escreval("Módulo....................: FALHA")
-    fimse
-    escreval("Igual.....................: ", n1 = n2)
-    escreval("Maior que.................: ", n1 > n2)
-    escreval("Menor que.................: ", n1 < n2)
+        fimse
+        escreval("Igual.....................: ", n1 = n2)
+        escreval("Maior que.................: ", n1 > n2)
+        escreval("Menor que.................: ", n1 < n2)
+        escreval("Entre 0 e 5...............: ", n1 >= 0 e n1 <= 5)
+        escreval("Entre 5 e 15..............: ", n1 >= 5 e n1 <= 15)
 
-    escreva("Contar até 10.............:")
-    n1 := 0
+        escreva("Contar até 10.............:")
+        n1 := 0
 
-    enquanto (n1 < 5) faca
+        enquanto (n1 < 5) faca
         escreva(" ", n1 + 1)
         n1 := n1 + 1
-    fimenquanto
+        fimenquanto
 
-    repita
+        repita
         escreva(" ", n1 + 1)
         n1 := n1 + 1
-    ate (n1 = 10)
+        ate (n1 = 10)
 
-    escreval("")
+        escreval("")
 
-    escreva("Contagem regressiva.......:")
+        escreva("Contagem regressiva.......:")
 
-    n1 := n2
-    
-    enquanto (n1 >= 0) faca
+        n1 := n2
+
+        se (n1 > 50) entao
+        n1 := 50
+        fimse
+
+        enquanto (n1 >= 0) faca
         escreva(" ", n1)
         n1 := n1 - 1
-    fimenquanto
+        fimenquanto
 
-    escreval("")
- 
-fimalgoritmo
+        escreval("")
+
+        fimalgoritmo
     </div>
     <div id="console">
         <button onclick="executar(); return false;">Executar</button>
+        VERSÃO ALPHA - APÓS ALGUNS MINUTOS DE INATIVIDADE A CONEXÃO É INTERROMPIDA, PRECISANDO RECARREGAR A PÁGINA (O interpretador não reconhece comentários no código ainda)
         <pre id="conteudo"></pre>
     </div>
     <div id="copyright">
@@ -138,12 +168,11 @@ fimalgoritmo
 
     </div>
     <script src="Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var editor = ace.edit("editor");
+    <script>var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/hcpc");
 
-        var conex = new WebSocket("ws://127.0.0.1:19890");
+        var conex = new WebSocket("ws://93.188.164.39:19890");
         conex.onmessage = function (evento)
         {
             var dados = JSON.parse(evento.data);
@@ -167,21 +196,38 @@ fimalgoritmo
                     break;
                 case "leia":
                     {
-                        conex.send(JSON.stringify(
-                            {
-                                "Tipo": "entrada",
-                                "Mensagem": "0"
-                            }));
                         var theDiv = document.getElementById("conteudo");
-                        var content = document.createTextNode("0\n");
+                        var content = document.createElement("input");
+                        content.setAttribute("type","text")
+                        content.setAttribute("id", "entrada")
+                        content.addEventListener("keypress", function(){if(event.keyCode==13){responderLeia();}return false;});
                         theDiv.appendChild(content);
+                        content.focus();
                         theDiv.scrollTop = theDiv.scrollHeight;
                     }
             }
         }
 
+        function responderLeia()
+        {
+            var campo = document.getElementById("entrada");
+            var theDiv = document.getElementById("conteudo");
+            content = document.createTextNode(campo.value + "\n");
+            theDiv.appendChild(content);
+            theDiv.scrollTop = theDiv.scrollHeight;
+            conex.send(JSON.stringify(
+                {
+                    "Tipo": "entrada",
+                    "Mensagem": campo.value
+                }));
+                campo.remove();
+        }
+
         function executar()
         {
+            var theDiv = document.getElementById("conteudo");
+            var content = document.createTextNode("\n");
+            theDiv.appendChild(content);
             conex.send(JSON.stringify(
                 {
                     "Tipo": "codigo",
@@ -192,7 +238,6 @@ fimalgoritmo
                 {
                     "Tipo": "executar"
                 }));
-        }
-    </script>
+        }</script>
 </body>
 </html>

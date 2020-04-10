@@ -55,12 +55,9 @@ namespace HCIPC
 
         //Local onde fica as variáveis locais
         private Dictionary<string, object> Variaveis { get; set; }
-        //Rotinas publicas, [Nome Armazenado em Minusculas com o nome do Algoritmo na frente com um ponto separando]
-        private Dictionary<string, NoFuncaoProcedimento> Rotinas { get; set; }
 
         public EstadoExecucao()
         {
-            if (Rotinas == null) Rotinas = new Dictionary<string, NoFuncaoProcedimento>();
             NivelGlobal = null;
             NivelAcima = null;
             Valor = null;
@@ -70,7 +67,7 @@ namespace HCIPC
         //Registra uma Função/Procedimento para ser possível de ser chamado posteriormente
         public void RegistrarRotinaLocal(string nome, NoFuncaoProcedimento rotina)
         {
-            Rotinas.Add((Algoritmo + "." + nome).ToLower(), rotina);
+            Interpretador.Rotinas.Add((Algoritmo + "." + nome).ToLower(), rotina);
         }
 
 
@@ -108,7 +105,7 @@ namespace HCIPC
             //Valor retornado pela função
             object retorno = null;
             //Caso exista a rotina, execute
-            if(Rotinas.ContainsKey(nomeRotina))
+            if(Interpretador.Rotinas.ContainsKey(nomeRotina))
             {
                 //Monta um Ambiente de memoria proprio para este nivel
                 //separando as variaveis locais das do nivel exatamente acima
@@ -119,15 +116,14 @@ namespace HCIPC
                     //TODO: Nao funciona com bibliotecas externas, teria que toda vez que carregar uma biblioteca externa executa-la para que sejam inicializadas as variaveis 
                     NivelGlobal = NivelGlobal == null ? this : NivelGlobal,
                     Interpretador = Interpretador,
-                    Algoritmo = algoritmo,
-                    Rotinas = Rotinas
+                    Algoritmo = algoritmo
                 };
                 int i = 0;
-                if(parametros.Length != Rotinas[nomeRotina].Parametros.Count)
+                if(parametros.Length != Interpretador.Rotinas[nomeRotina].Parametros.Count)
                 {
                     throw new Erro(NoAtual, "Quantidade de parametros fornecidos é diferente da quantidade esperada por essa rotina");
                 }
-                foreach (var par in Rotinas[nomeRotina].Parametros)
+                foreach (var par in Interpretador.Rotinas[nomeRotina].Parametros)
                 {
                     exe[par.Key] = parametros[i];
                     if(parametros[i].GetType().FullName != par.Value.FullName)
@@ -147,8 +143,8 @@ namespace HCIPC
                     }
                     i++;
                 }
-                Rotinas[nomeRotina].ExecutarRotina(ref exe);
-                if(Rotinas[nomeRotina].RetornaValor)
+                Interpretador.Rotinas[nomeRotina].ExecutarRotina(ref exe);
+                if(Interpretador.Rotinas[nomeRotina].RetornaValor)
                 {
                     retorno = exe.Valor;
                 }

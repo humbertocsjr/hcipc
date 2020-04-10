@@ -31,11 +31,15 @@ namespace HCIPCWEB
         {
             Sessao.Entrada = null;
             Sessao.EnviarLeia();
-            while (Sessao.Entrada == null)
+            while (Sessao.Entrada == null & !Sessao.Interpretador.Abortar)
             {
                 Thread.Sleep(150);
             }
             return Sessao.Entrada;
+        }
+
+        public override void InformarParada(string arquivo, int linha)
+        {
         }
     }
 }

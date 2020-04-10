@@ -72,5 +72,9 @@ namespace HCIPC
         {
             return Console.ReadLine();
         }
+
+        public override void InformarParada(string arquivo, int linha)
+        {
+        }
     }
 }

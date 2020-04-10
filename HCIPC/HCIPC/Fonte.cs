@@ -40,6 +40,8 @@ namespace HCIPC
     {
         private string _fonte = "";
 
+        public List<int> PontosDeParada { get; set; }
+
         public string NomeDoArquivo { get; set; }
         public string CodigoFonte
         {
@@ -92,6 +94,7 @@ namespace HCIPC
 
         public Fonte()
         {
+            PontosDeParada = new List<int>();
             PosicoesLinhas = new Dictionary<int, int>();
             Posicoes = new Dictionary<int, int[]>();
             PosicaoLeitura = 0;
@@ -161,7 +164,9 @@ namespace HCIPC
                             (
                                 (Atual >= 'A' & Atual <= 'Z') |
                                 (Atual >= 'a' & Atual <= 'z') |
-                                (Atual >= '0' & Atual <= '9')
+                                (Atual >= '0' & Atual <= '9') |
+                                Atual == '_' |
+                                Atual == '.'
                             )
                         {
                             trecho += Atual;
@@ -170,11 +175,12 @@ namespace HCIPC
                     }
                     break;
                 case char a when ((a >= '0' & a <= '9') ):
-                    //Identificador
+                    //Numero
                     {
                         while
                             (
-                                (Atual >= '0' & Atual <= '9')
+                                (Atual >= '0' & Atual <= '9') |
+                                Atual == '.'
                             )
                         {
                             trecho += Atual;
@@ -273,11 +279,73 @@ namespace HCIPC
             {
                 no = nos.First();
                 nos.Remove(nos.First());
+                if(nos.Any() && nos.First() is NoDoisPontos)
+                {
+                    nos.Remove(nos.First());
+                    if (nos.First() is NoNumeroInteiro)
+                    {
+                        var casasAntes = nos.First();
+                        nos.Remove(nos.First());
+                        if (nos.First() is NoDoisPontos)
+                        {
+                            nos.Remove(nos.First());
+                            if (nos.First() is NoNumeroInteiro)
+                            {
+                                no = ((NoNumeroInteiro)no).ParaTexto(((NoNumeroInteiro)casasAntes).Valor, ((NoNumeroInteiro)nos.First()).Valor);
+                                nos.Remove(nos.First());
+                            }
+                            else
+                            {
+                                throw new Erro(nos.First(), "Esperado um número inteiro para definir a quantidade de casas a serem exibidas antes da virgula");
+                            }
+
+                        }
+                        else
+                        {
+                            no = ((NoNumeroInteiro)no).ParaTexto(((NoNumeroInteiro)casasAntes).Valor, 0);
+                        }
+                    }
+                    else
+                    {
+                        throw new Erro(nos.First(), "Esperado um número inteiro para definir a quantidade de casas a serem exibidas antes da virgula");
+                    }
+                }
             }
             else if (nos.First() is NoNumeroReal)
             {
                 no = nos.First();
                 nos.Remove(nos.First());
+                if (nos.Any() && nos.First() is NoDoisPontos)
+                {
+                    nos.Remove(nos.First());
+                    if (nos.First() is NoNumeroInteiro)
+                    {
+                        var casasAntes = nos.First();
+                        nos.Remove(nos.First());
+                        if (nos.First() is NoDoisPontos)
+                        {
+                            nos.Remove(nos.First());
+                            if (nos.First() is NoNumeroInteiro)
+                            {
+                                no = ((NoNumeroReal)no).ParaTexto(((NoNumeroInteiro)casasAntes).Valor, ((NoNumeroInteiro)nos.First()).Valor);
+                                nos.Remove(nos.First());
+                            }
+                            else
+                            {
+                                throw new Erro(nos.First(), "Esperado um número inteiro para definir a quantidade de casas a serem exibidas antes da virgula");
+                            }
+
+                        }
+                        else
+                        {
+                            no = ((NoNumeroReal)no).ParaTexto(((NoNumeroInteiro)casasAntes).Valor, 0);
+                        }
+                    }
+                    else
+                    {
+                        throw new Erro(nos.First(), "Esperado um número inteiro para definir a quantidade de casas a serem exibidas antes da virgula");
+                    }
+                }
             }
             else if (nos.First() is NoLerVariavel)
             {
@@ -300,7 +368,12 @@ namespace HCIPC
                 no = nos.First();
                 nos.Remove(nos.First());
             }
-            else if (nos.First() is NoChamaFuncaoProcedimento )
+            else if (nos.First() is NoChamaFuncaoProcedimento)
+            {
+                no = nos.First();
+                nos.Remove(nos.First());
+            }
+            else if (nos.First() is NoConverterNumeroEmTexto)
             {
                 no = nos.First();
                 nos.Remove(nos.First());
@@ -807,7 +880,7 @@ namespace HCIPC
                                     }
                                     else if (proximo is NoTipoReal)
                                     {
-                                        noTemp.ValorInicial = 0f;
+                                        noTemp.ValorInicial = 0m;
                                     }
                                     else if (proximo is NoTipoCaracter)
                                     {
@@ -817,16 +890,54 @@ namespace HCIPC
                                     {
                                         noTemp.ValorInicial = false;
                                     }
+                                    else if (proximo is NoNumeroInteiro)
+                                    {
+                                        var casasAntes = proximo;
+                                        nos.Remove(nos.First());
+                                        proximo = ProcessarNo();
+                                        if (proximo is NoDoisPontos)
+                                        {
+                                            proximo = ProcessarNo();
+                                            if (proximo is NoNumeroInteiro)
+                                            {
+                                                no = new NoConverterNumeroEmTexto()
+                                                {
+                                                    Nome = noTemp.Nome,
+                                                    CasasAntes = ((NoNumeroInteiro)casasAntes).Valor,
+                                                    CasasDepois = ((NoNumeroInteiro)proximo).Valor
+                                                };
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                throw new Erro(nos.First(), "Esperado um número inteiro para definir a quantidade de casas a serem exibidas antes da virgula");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            no = new NoConverterNumeroEmTexto()
+                                            {
+                                                Nome = noTemp.Nome,
+                                                CasasAntes = ((NoNumeroInteiro)casasAntes).Valor,
+                                                CasasDepois = 0
+                                            };
+                                            DesfazerUltimoLerTrecho();
+                                            break;
+                                        }
+                                    }
                                     else
                                     {
                                         throw new Erro(proximo, "Esperado um tipo de variável");
                                     }
                                 }
-                                //Agrupa todas as declarações em um unico bloco
-                                no = new NoBloco()
+                                if(!(no is NoConverterNumeroEmTexto))
                                 {
-                                    Nos = nos
-                                };
+                                    //Agrupa todas as declarações em um unico bloco
+                                    no = new NoBloco()
+                                    {
+                                        Nos = nos
+                                    };
+                                }
                             }
                             else if(proximo is NoAbreParenteses)
                             {

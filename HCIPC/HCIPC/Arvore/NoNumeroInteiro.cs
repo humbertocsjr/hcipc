@@ -45,5 +45,21 @@ namespace HCIPC.Arvore
             //Retorna o valor guardado neste nó do código fonte
             estado.Valor = Valor;
         }
+
+        public NoTexto ParaTexto()
+        {
+            NoTexto retorno = new NoTexto();
+            CopiarDadosBase(this, retorno);
+            retorno.Valor = Valor.ToString();
+            return retorno;
+        }
+
+        public NoTexto ParaTexto(int casasAntes, int casasApos)
+        {
+            NoTexto retorno = new NoTexto();
+            CopiarDadosBase(this, retorno);
+            retorno.Valor = Valor.ToString(new string('0',casasAntes) + (casasApos > 0 ? "." + new string('0', casasApos): ""));
+            return retorno;
+        }
     }
 }

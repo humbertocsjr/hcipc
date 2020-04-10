@@ -96,7 +96,7 @@ namespace HCIPC.Arvore
             else
             {
                 //Nenhuma das anteriores, da erro porque não sabe converter
-                throw new Erro(this, "Variável '" + Nome + "' não contém um tipo compatível com o Leia");
+                throw new Erro(this, "Variável '" + Nome + "' não contém um tipo compatível com o Leia" + (estado[Nome]).GetType().ToString());
             }
         }
     }

@@ -42,6 +42,7 @@ namespace HCIPCWEB
 
         public static void AoFechar(IWebSocketConnection conex)
         {
+            Sessoes[conex].Interpretador.AbortarExecucao();
             Sessoes.Remove(conex);
             Console.WriteLine(conex.ConnectionInfo.Id.ToString() + " - Fechada conexão do IP" + conex.ConnectionInfo.ClientIpAddress.ToString());
         }

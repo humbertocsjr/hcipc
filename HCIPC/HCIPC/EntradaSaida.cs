@@ -58,5 +58,6 @@ namespace HCIPC
         public abstract void Enter();
         public abstract void Escreva(string valor);
         public abstract string Leia();
+        public abstract void InformarParada(string arquivo, int linha);
     }
 }

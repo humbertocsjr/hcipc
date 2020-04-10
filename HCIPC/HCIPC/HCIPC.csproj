@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NuGet.Build.Packaging.0.2.5-dev.8\build\NuGet.Build.Packaging.props" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.5-dev.8\build\NuGet.Build.Packaging.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">anycpu</Platform>
@@ -9,8 +10,19 @@
     <AssemblyName>HCIPC</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <Description>Humberto Costa | Interpretador de Pseudo-Código</Description>
-    <ReleaseVersion>0.0.5</ReleaseVersion>
+    <ReleaseVersion>0.0.7</ReleaseVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageId>HCPseudoCodigo</PackageId>
+    <PackageVersion>0.0.7-alpha</PackageVersion>
+    <Authors>Humberto Costa dos Santos Junior</Authors>
+    <Copyright>Copyright (c) 2020 Humberto Costa dos Santos Junior</Copyright>
+    <NeutralLanguage>pt-BR</NeutralLanguage>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/humbertocsjr/hcipc/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Owners>Humberto Costa dos Santos Junior</Owners>
+    <PackageProjectUrl>https://github.com/humbertocsjr/hcipc</PackageProjectUrl>
+    <Title>Interpretador de Pseudo-Codigo</Title>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">
     <DebugSymbols>true</DebugSymbols>
@@ -94,14 +106,19 @@
     <Compile Include="Arvore\NoFuncaoProcedimento.cs" />
     <Compile Include="Arvore\NoFimFuncaoProcedimento.cs" />
     <Compile Include="Arvore\NoChamaFuncaoProcedimento.cs" />
+    <Compile Include="Arvore\NoConverterNumeroEmTexto.cs" />
+    <Compile Include="EstadosDeDepuracao.cs" />
+    <Compile Include="Integracao\DeclaraRotina.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Arvore\" />
+    <Folder Include="Integracao\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="teste.hcp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -113,4 +130,5 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <Import Project="..\packages\NuGet.Build.Packaging.0.2.5-dev.8\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.5-dev.8\build\NuGet.Build.Packaging.targets')" />
 </Project>

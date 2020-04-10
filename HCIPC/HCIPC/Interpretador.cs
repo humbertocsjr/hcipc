@@ -38,6 +38,14 @@ namespace HCIPC
 {
     public class Interpretador
     {
+        public bool Abortar { get; private set; }
+        //Estado do Depurador
+        public EstadosDeDepuracao EstadoAtualDeDepuracao { get; set; }
+        public string ArquivoAtual { get; set; }
+        public int LinhaAtualDeDepuracao { get; set; }
+        //Rotinas publicas, [Nome Armazenado em Minusculas com o nome do Algoritmo na frente com um ponto separando]
+        internal Dictionary<string, NoFuncaoProcedimento> Rotinas { get; set; }
+
         Dictionary<string, Fonte> _fontes = new Dictionary<string, Fonte>();
         Fonte _inicial = null;
         EstadoExecucao _estado = new EstadoExecucao();
@@ -49,6 +57,26 @@ namespace HCIPC
             //Inicializa com o módulo de E/S padrão, podendo ser subistituido
             EntradaSaidaPadrao = new EntradaSaidaTerminal();
             _estado.Interpretador = this;
+            Abortar = false;
+            EstadoAtualDeDepuracao = EstadosDeDepuracao.ExecucaoAteProximoPontoDeParada;
+            LinhaAtualDeDepuracao = 0;
+            ArquivoAtual = "";
+            Rotinas = new Dictionary<string, NoFuncaoProcedimento>();
+        }
+
+        internal void RegistrarRotina(string biblioteca, string nomeDaRotina, NoFuncaoProcedimento rotina)
+        {
+            Rotinas.Add((biblioteca + "." + nomeDaRotina).ToLower(), rotina);
+        }
+
+        public Integracao.DeclaraRotina RegistrarRotinaNativa()
+        {
+            return new Integracao.DeclaraRotina(this);
+        }
+
+        public void AbortarExecucao()
+        {
+            Abortar = true;
         }
 
         public void AdicionarArquivo(string endereco, bool arquivoExecutavelPrincipal)
@@ -79,10 +107,62 @@ namespace HCIPC
             return retorno;
         }
 
+        public void AdicionarPontoDeParada(string arquivo, int linha)
+        {
+            _fontes[arquivo].PontosDeParada.Add(linha);
+        }
+
         public bool Executar()
         {
+            Abortar = false;
             //Executa o código marcado para tal
             return Executar(_inicial.NoRaiz, ref _estado);
+        }
+
+        public bool ExecutarRotinaLocal(string rotina, params object[] parametros)
+        {
+            var no = new NoChamaFuncaoProcedimento()
+            {
+                Fonte = _inicial,
+                FonteColuna = 0,
+                FonteLinha = 0,
+                FontePosicao = 0,
+                Nome = rotina,
+                Parametros = new List<No>()
+            };
+            foreach (var par in parametros)
+            {
+                if(par is int)
+                {
+                    no.Parametros.Add(new NoNumeroInteiro()
+                    {
+                        Valor = (int)par
+                    });
+                }
+                else if (par is decimal)
+                {
+                    no.Parametros.Add(new NoNumeroReal()
+                    {
+                        Valor = (decimal)par
+                    });
+                }
+                else if (par is string)
+                {
+                    no.Parametros.Add(new NoTexto()
+                    {
+                        Valor = (string)par
+                    });
+                }
+                else if (par is bool)
+                {
+                    no.Parametros.Add(((bool)par) ? (No)new NoVerdadeiro() : (No)new NoFalso());
+                }
+                else
+                {
+                    throw new Erro(null, "Parametro do tipo nativo '" + par.GetType() + "' não é suportado ");
+                }
+            }
+            return Executar(no, ref _estado);
         }
 
         private bool Executar(No raiz,  ref EstadoExecucao estado)

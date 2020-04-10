@@ -30,6 +30,8 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using System.Threading;
+
 namespace HCIPC.Arvore
 {
     public abstract class No
@@ -44,9 +46,44 @@ namespace HCIPC.Arvore
         {
         }
 
+        public void CopiarDadosBase(No noOrigem, No noDestino)
+        {
+
+            noDestino.FonteLinha = noOrigem.FonteLinha;
+            noDestino.FonteColuna = noOrigem.FonteColuna;
+            noDestino.Fonte = noOrigem.Fonte;
+            noDestino.FontePosicao = noOrigem.FontePosicao;
+        }
+
         // Comando chamado pelo Interpretador para Executar o comando deste nó
         public void ExecutarNo(ref EstadoExecucao estado)
         {
+            if (estado.Interpretador.Abortar) throw new Erro(this, "Execução abortada");
+            switch (estado.Interpretador.EstadoAtualDeDepuracao)
+            {
+                case EstadosDeDepuracao.AguardandoLiberacaoDoDepurador:
+                    while(estado.Interpretador.EstadoAtualDeDepuracao == EstadosDeDepuracao.AguardandoLiberacaoDoDepurador)
+                    {
+                        Thread.Sleep(150);
+                    }
+                    break;
+                case EstadosDeDepuracao.ExecucaoAteProximoPontoDeParada:
+                    if(Fonte.PontosDeParada.Contains(FonteLinha))
+                    {
+                        estado.ES.InformarParada(Fonte.NomeDoArquivo, FonteLinha);
+                        estado.Interpretador.EstadoAtualDeDepuracao = EstadosDeDepuracao.AguardandoLiberacaoDoDepurador;
+                        estado.Interpretador.LinhaAtualDeDepuracao = FonteLinha;
+                        estado.Interpretador.ArquivoAtual = Fonte.NomeDoArquivo;
+                    }
+                    break;
+                case EstadosDeDepuracao.ExecutarProximaLinha:
+                    {
+
+                    }
+                    break;
+                default:
+                    break;
+            }
             try
             {
                 //TODO: Colocar aqui a parte de depuração esperando liberação da IDE
@@ -66,6 +103,7 @@ namespace HCIPC.Arvore
                 //Caso aconteça um erro desconhecido, recria no formato Erro
                 throw new Erro(this, "Erro desconhecido: " + ex.ToString());
             }
+            if (estado.Interpretador.Abortar) throw new Erro(this, "Execução abortada");
         }
 
         //Comando implementado pelos Nós para executar o comando

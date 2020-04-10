@@ -30,35 +30,33 @@
 // * SUCH DAMAGE.
 // */
 using System;
-using System.Collections.Generic;
-
 namespace HCIPC.Arvore
 {
-    public class NoChamaFuncaoProcedimento : No
+    public class NoConverterNumeroEmTexto : No
     {
+        //Variavel
         public string Nome { get; set; }
-        public List<No> Parametros { get; set; }
+        public int CasasAntes { get; set; }
+        public int CasasDepois { get; set; }
 
-        public NoChamaFuncaoProcedimento()
+        public NoConverterNumeroEmTexto()
         {
         }
 
         protected override void Executar(ref EstadoExecucao estado)
         {
-            List<object> pars = new List<object>();
-            foreach (var par in Parametros)
+            var obj = estado[Nome];
+            if (obj is int)
             {
-                estado.Valor = null;
-                par.ExecutarNo(ref estado);
-                pars.Add(estado.Valor);
+                estado.Valor = ((int)obj).ToString(new string('0', CasasAntes) + (CasasDepois > 0 ? "." + new string('0', CasasDepois) : "")); ;
             }
-            if(Nome.Contains("."))
+            else if (obj is decimal)
             {
-                estado.Valor = estado.ExecutarRotina(Nome.Split('.')[0], Nome.Split('.')[1], pars.ToArray()) ;
+                estado.Valor = ((decimal)obj).ToString(new string('0', CasasAntes) + (CasasDepois > 0 ? "." + new string('0', CasasDepois) : "")); ;
             }
             else
             {
-                estado.Valor = estado.ExecutarRotinaLocal(Nome, pars.ToArray());
+                throw new Erro(this, "Esperado uma variável númerica para conversão em texto");
             }
         }
     }

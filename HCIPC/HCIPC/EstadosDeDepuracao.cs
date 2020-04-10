@@ -30,36 +30,14 @@
 // * SUCH DAMAGE.
 // */
 using System;
-using System.Collections.Generic;
-
-namespace HCIPC.Arvore
+namespace HCIPC
 {
-    public class NoChamaFuncaoProcedimento : No
+    public enum EstadosDeDepuracao
     {
-        public string Nome { get; set; }
-        public List<No> Parametros { get; set; }
-
-        public NoChamaFuncaoProcedimento()
-        {
-        }
-
-        protected override void Executar(ref EstadoExecucao estado)
-        {
-            List<object> pars = new List<object>();
-            foreach (var par in Parametros)
-            {
-                estado.Valor = null;
-                par.ExecutarNo(ref estado);
-                pars.Add(estado.Valor);
-            }
-            if(Nome.Contains("."))
-            {
-                estado.Valor = estado.ExecutarRotina(Nome.Split('.')[0], Nome.Split('.')[1], pars.ToArray()) ;
-            }
-            else
-            {
-                estado.Valor = estado.ExecutarRotinaLocal(Nome, pars.ToArray());
-            }
-        }
+        ExecucaoContinua,
+        ExecucaoAteProximoPontoDeParada,
+        ExecutarEstaLinha,
+        ExecutarProximaLinha,
+        AguardandoLiberacaoDoDepurador
     }
 }

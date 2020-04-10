@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Humberto Costa | Editor de Pseudo-Código</title>
-		<meta charset="utf-8"/>
+    <title>Editor de Pseudo-Código</title>
+    <meta charset="utf-8"/>
     <style type="text/css" media="screen">
         #titulo
         {
@@ -33,6 +33,13 @@
             color: white;
             font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
         }
+        #entrada {
+            background-color: black;
+            border: solid 0px green;
+            border-bottom: solid 1px green;
+            color: #4AF626;
+            font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+        }
         #conteudo {
             position: absolute;
             top: 50px;
@@ -42,7 +49,7 @@
             overflow-y: scroll;
             background-color: black;
             border: solid 1px green;
-            color: green;
+            color: #4AF626;
             font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
         }
         #copyright
@@ -60,9 +67,9 @@
     </style>
 </head>
 <body>
-		<div id="titulo">
-			<h3>Editor Online de Pseudo-Código</h3>
-		</div>
+    <div id="titulo">
+      <h3>Editor Online de Pseudo-Código</h3>
+    </div>
     <div id="editor">
 algoritmo "teste"
 
@@ -102,6 +109,8 @@ inicio
     escreval("Igual.....................: ", n1 = n2)
     escreval("Maior que.................: ", n1 > n2)
     escreval("Menor que.................: ", n1 < n2)
+    escreval("Entre 0 e 5...............: ", n1 >= 0 e n1 <= 5)
+    escreval("Entre 5 e 15..............: ", n1 >= 5 e n1 <= 15)
 
     escreva("Contar até 10.............:")
     n1 := 0
@@ -122,6 +131,10 @@ inicio
 
     n1 := n2
     
+    se (n1 > 50) entao
+        n1 := 50
+    fimse
+    
     enquanto (n1 >= 0) faca
         escreva(" ", n1)
         n1 := n1 - 1
@@ -133,7 +146,7 @@ fimalgoritmo
     </div>
     <div id="console">
         <button onclick="executar(); return false;">Executar</button>
-				VERSÃO ALPHA - OS COMANDOS LEIA SÃO RESPONDIDOS COM "10"
+        VERSÃO ALPHA - APÓS ALGUNS MINUTOS DE INATIVIDADE A CONEXÃO É INTERROMPIDA, PRECISANDO RECARREGAR A PÁGINA (O interpretador não reconhece comentários no código ainda)
         <pre id="conteudo"></pre>
     </div>
     <div id="copyright">
@@ -182,21 +195,38 @@ fimalgoritmo
                     break;
                 case "leia":
                     {
-                        conex.send(JSON.stringify(
-                            {
-                                "Tipo": "entrada",
-                                "Mensagem": "10"
-                            }));
                         var theDiv = document.getElementById("conteudo");
-                        var content = document.createTextNode("10\n");
+                        var content = document.createElement("input");
+                        content.setAttribute("type","text")
+                        content.setAttribute("id", "entrada")
+                        content.addEventListener("keypress", function(){if(event.keyCode==13){responderLeia();}return false;});
                         theDiv.appendChild(content);
+                        content.focus();
                         theDiv.scrollTop = theDiv.scrollHeight;
                     }
             }
         }
+        
+        function responderLeia()
+        {
+            var campo = document.getElementById("entrada");
+            var theDiv = document.getElementById("conteudo");
+            content = document.createTextNode(campo.value + "\n");
+            theDiv.appendChild(content);
+            theDiv.scrollTop = theDiv.scrollHeight;
+            conex.send(JSON.stringify(
+                {
+                    "Tipo": "entrada",
+                    "Mensagem": campo.value
+                }));
+                campo.remove();
+        }
 
         function executar()
         {
+            var theDiv = document.getElementById("conteudo");
+            var content = document.createTextNode("\n");
+            theDiv.appendChild(content);
             conex.send(JSON.stringify(
                 {
                     "Tipo": "codigo",
@@ -211,3 +241,4 @@ fimalgoritmo
     </script>
 </body>
 </html>
+

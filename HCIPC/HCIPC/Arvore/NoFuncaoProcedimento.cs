@@ -40,6 +40,7 @@ namespace HCIPC.Arvore
         public Type TipoRetornado { get; set; }
         public string Nome { get; set; }
         public Dictionary<string, Type> Parametros { get; set; }
+        public Action<EstadoExecucao, NoFuncaoProcedimento> RotinaNativa { get; set; }
 
         public NoFuncaoProcedimento()
         {
@@ -47,6 +48,7 @@ namespace HCIPC.Arvore
             RetornaValor = false;
             TipoRetornado = null;
             Nome = "";
+            RotinaNativa = null;
         }
 
         protected override void Executar(ref EstadoExecucao estado)
@@ -56,9 +58,16 @@ namespace HCIPC.Arvore
 
         public void ExecutarRotina(ref EstadoExecucao estado)
         {
-            foreach (var no in Nos)
+            if (RotinaNativa != null)
             {
-                no.ExecutarNo(ref estado);
+                RotinaNativa(estado, this);
+            }
+            else
+            {
+                foreach (var no in Nos)
+                {
+                    no.ExecutarNo(ref estado);
+                }
             }
         }
     }
