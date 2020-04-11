@@ -11,11 +11,19 @@ inicio
     teste1 := 2
     teste1 := valor * teste1
 fimfuncao
+
+funcao multiplica (valor,valor2:inteiro)
+var
+    teste1:inteiro
+inicio
+    teste1 := valor * valor2
+fimfuncao
  
 inicio
+    escreva("oi" != "oi")
     escreva("Digite o primeiro número..: ")
     leia(n1)
-
+    multiplica(n1, n2)
     escreva("Digite o segundo número...: ")
     leia(n2)
 

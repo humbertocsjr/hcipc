@@ -224,6 +224,7 @@ namespace HCIPC
                     switch (PreverCaractere())
                     {
                         case '-': //'<-'
+                        case '>': //'<>'
                         case '=': //'<='
                             trecho += Atual;
                             LerCaractere();
@@ -237,6 +238,21 @@ namespace HCIPC
                     }
                     break;
                 case '>':
+                    switch (PreverCaractere())
+                    {
+                        case '='://'>='
+                            trecho += Atual;
+                            LerCaractere();
+                            trecho += Atual;
+                            LerCaractere();
+                            break;
+                        default://'>'
+                            trecho += Atual;
+                            LerCaractere();
+                            break;
+                    }
+                    break;
+                case '!':
                     switch (PreverCaractere())
                     {
                         case '='://'>='
@@ -520,7 +536,7 @@ namespace HCIPC
             return no;
         }
 
-        public No ProcessarNo()
+        public No ProcessarNo(bool ignorarDeclaracaoDeVariavel = false, bool parametrosDeUmaRotina = false)
         {
             //Processa o próximo nó, quando for um nó especial de bloco, processa os nós abaixo
             //Guarda a posição atual no codigo fonte
@@ -563,7 +579,7 @@ namespace HCIPC
                         };
                         var pars = new List<NoDeclararVariavel>();
                         No sub;
-                        sub = ProcessarNo();
+                        sub = ProcessarNo(false, true);
                         //Quando declarado no formato [procedimento NOME (PAR1, PAR2)] se le como um no do tipo NoChamaFuncaoProcedimento
                         if(sub is NoChamaFuncaoProcedimento)
                         {
@@ -838,7 +854,7 @@ namespace HCIPC
 
                                 no = atrib;
                             }
-                            else if(proximo is NoDoisPontos | proximo is NoVirgula)
+                            else if((proximo is NoDoisPontos | proximo is NoVirgula) &  (!ignorarDeclaracaoDeVariavel | parametrosDeUmaRotina ) )
                             {
                                 //Quando seja uma declaração de variavel. Ex: variavel1 : inteiro
                                 List<No> nos = new List<No>();
@@ -949,7 +965,7 @@ namespace HCIPC
                                 //Etapa 1 - Ler os argumentos sem processar
                                 while (contaParenteses > 0)
                                 {
-                                    proximo = ProcessarNo();
+                                    proximo = ProcessarNo(true, parametrosDeUmaRotina);
                                     if (proximo is NoAbreParenteses)
                                     {
                                         contaParenteses++;

@@ -2,31 +2,81 @@
 algoritmo "teste"
 
 var
-    aluno, notas:inteiro
-    item, soma, media: real
+    n1, n2, soma: inteiro
 
+funcao multiplicaPor2 (valor:inteiro)
+var
+    teste1:inteiro
+inicio
+    teste1 := 2
+    teste1 := valor * teste1
+fimfuncao
+
+funcao multiplica (valor,valor2:inteiro)
+var
+    teste1:inteiro
+inicio
+    teste1 := valor * valor2
+fimfuncao
  
 inicio
-    escreval("Media 15 alunos")
-    
-    aluno := 1
-    
-    enquanto (aluno <= 15) faca
-        escreval("Digite as 4 notas dos alunos")
-        notas := 1
-        enquanto (notas <= 5) faca
-            leia(item)
-            soma := soma + item
-            notas := notas + 1
-        fimenquanto
-        media := soma / 5
-        escreval("Media do aluno atual = ", media)
-        se (media >= 7.0 ) entao
-            escreval("aprovado")
-        senao
-            escreval("reprovado")
-        fimse
-        aluno := aluno + 1
+    escreva("Digite o primeiro número..: ")
+    leia(n1)
+    multiplica(n1, n2)
+    escreva("Digite o segundo número...: ")
+    leia(n2)
+
+    soma := (n1 + n2)
+
+    escreval("Número 1..................: ", n1)
+    escreval("Número 2..................: ", n2)
+    escreval("Soma......................: ", soma)
+    escreval("Subtração.................: ", n1-n2)
+    escreval("Multiplicação.............: ", n1*n2)
+    escreval("Multiplica por 2..........: ", teste.multiplicaPor2(n1))
+    escreval("Multiplica por 4..........: ", multiplicaPor2(n1) * 2)
+    se (n2 > 0) entao
+        escreval("Divisão...................: ", n1/n2)
+        escreval("Módulo....................: ", n1 mod n2)
+    senao
+        escreval("Divisão...................: FALHA")
+        escreval("Módulo....................: FALHA")
+    fimse
+    escreval("Igual.....................: ", n1 = n2)
+    escreval("Maior que.................: ", n1 > n2)
+    escreval("Menor que.................: ", n1 < n2)
+    escreval("Entre 0 e 5...............: ", n1 >= 0 e n1 <= 5)
+    escreval("Entre 5 e 15..............: ", n1 >= 5 e n1 <= 15)
+
+    escreva("Contar até 10.............:")
+    n1 := 0
+
+    enquanto (n1 < 5) faca
+        escreva(" ", n1 + 1)
+        n1 := n1 + 1
     fimenquanto
+
+    repita
+        escreva(" ", n1 + 1)
+        n1 := n1 + 1
+    ate (n1 = 10)
+
+    escreval("")
+
+    escreva("Contagem regressiva.......:")
+
+    n1 := n2
     
+    se (n1 > 50) entao
+        n1 := 50
+    fimse
+    
+    enquanto (n1 >= 0) faca
+        escreva(" ", n1)
+        n1 := n1 - 1
+    fimenquanto
+
+    escreval("")
+ 
 fimalgoritmo
+    
