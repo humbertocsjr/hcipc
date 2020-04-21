@@ -30,6 +30,8 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoLeia : No
@@ -92,6 +94,37 @@ namespace HCIPC.Arvore
                 {
                     throw new Erro(this, "Esperada inserção de valor numérico inteiro pelo usuário");
                 }
+            }
+            else
+            {
+                //Nenhuma das anteriores, da erro porque não sabe converter
+                throw new Erro(this, "Variável '" + Nome + "' não contém um tipo compatível com o Leia" + (estado[Nome]).GetType().ToString());
+            }
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            //Verifica se a variável destino existe
+            if (estado[Nome] == null)
+            {
+                //Se não existir da erro
+                throw new Erro(this, "Variável '" + Nome + "' não existe");
+            }
+            else if (estado[Nome] is string)
+            {
+                comp.SisOp.LeiaDoUsuarioGravandoNaVariavelTexto(Nome);
+            }
+            else if (estado[Nome] is decimal)
+            {
+                comp.SisOp.LeiaDoUsuarioGravandoNaVariavelReal(Nome);
+            }
+            else if (estado[Nome] is bool)
+            {
+                comp.SisOp.LeiaDoUsuarioGravandoNaVariavelLogico(Nome);
+            }
+            else if (estado[Nome] is int)
+            {
+                comp.SisOp.LeiaDoUsuarioGravandoNaVariavelInteiro(Nome);
             }
             else
             {

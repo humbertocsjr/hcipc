@@ -42,6 +42,21 @@ namespace HCIPC.Arvore
         {
         }
 
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            estado.Algoritmo = Nome;
+            comp.DeclararAlgoritmo(Nome);
+            int inicio = comp.ReservarMarcador(Integracao.ArquiteturaDoCompilador.TiposDeMarcador.InicioRotina);
+            int fim = comp.ReservarMarcador(Integracao.ArquiteturaDoCompilador.TiposDeMarcador.FimRotina);
+            comp.AplicarMarcadorAqui(inicio);
+            foreach (var no in Nos)
+            {
+                no.Compilar(comp, ref estado);
+            }
+            comp.AplicarMarcadorAqui(fim);
+            comp.FimAlgoritmo();
+        }
+
         protected override void Executar(ref EstadoExecucao estado)
         {
             estado.Algoritmo = Nome;

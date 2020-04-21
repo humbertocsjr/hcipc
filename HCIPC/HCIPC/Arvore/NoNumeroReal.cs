@@ -30,6 +30,8 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoNumeroReal : No
@@ -61,6 +63,12 @@ namespace HCIPC.Arvore
             CopiarDadosBase(this, retorno);
             retorno.Valor = Valor.ToString(new string('0', casasAntes) + (casasApos > 0 ? "." + new string('0', casasApos) : ""));
             return retorno;
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            comp.GravarRealNoValorAtual(Valor);
+            comp.DeclararTipoDoValorAtual(ArquiteturaDoCompilador.TiposDeVariavel.Real);
         }
     }
 }

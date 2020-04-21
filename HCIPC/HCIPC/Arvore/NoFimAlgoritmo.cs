@@ -30,11 +30,17 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoFimAlgoritmo : No
     {
         public NoFimAlgoritmo()
+        {
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
         {
         }
 

@@ -38,6 +38,11 @@ namespace HCIPC.Arvore
         {
         }
 
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override void Executar(ref EstadoExecucao estado)
         {
             throw new NotImplementedException();

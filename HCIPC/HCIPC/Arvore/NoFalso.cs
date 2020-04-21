@@ -30,12 +30,20 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoFalso : No
     {
         public NoFalso()
         {
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            comp.GravarLogicoNoValorAtual(false);
+            comp.DeclararTipoDoValorAtual(ArquiteturaDoCompilador.TiposDeVariavel.Logico);
         }
 
         protected override void Executar(ref EstadoExecucao estado)

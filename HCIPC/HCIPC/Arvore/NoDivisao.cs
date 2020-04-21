@@ -38,6 +38,14 @@ namespace HCIPC.Arvore
         {
         }
 
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            Item2.Compilar(comp, ref estado);
+            comp.EmpilharValorAtual();
+            Item1.Compilar(comp, ref estado);
+            comp.DesempilharEDividirGuardandoNoValorAtual();
+        }
+
         protected override void Executar(ref EstadoExecucao estado)
         {
             try

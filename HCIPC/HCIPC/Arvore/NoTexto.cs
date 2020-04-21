@@ -30,6 +30,8 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoTexto : No
@@ -45,6 +47,12 @@ namespace HCIPC.Arvore
         {
             //Retorna o valor guardado neste nó do código fonte
             estado.Valor = Valor;
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            comp.GravarTextoNoValorAtual(Valor);
+            comp.DeclararTipoDoValorAtual(ArquiteturaDoCompilador.TiposDeVariavel.Texto);
         }
     }
 }

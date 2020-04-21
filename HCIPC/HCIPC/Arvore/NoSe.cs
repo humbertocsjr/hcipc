@@ -31,6 +31,7 @@
 // */
 using System;
 using System.Collections.Generic;
+using HCIPC.Integracao;
 
 namespace HCIPC.Arvore
 {
@@ -67,6 +68,30 @@ namespace HCIPC.Arvore
                     no.ExecutarNo(ref estado);
                 }
             }
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            var inicio = comp.ReservarMarcador(ArquiteturaDoCompilador.TiposDeMarcador.Se);
+            var fim = comp.ReservarMarcador(ArquiteturaDoCompilador.TiposDeMarcador.FimSe);
+            var senao = comp.ReservarMarcador(ArquiteturaDoCompilador.TiposDeMarcador.Senao);
+
+            Condicao.Compilar(comp, ref estado);
+            comp.CompararSeValorAtualForIgualAVerdadeiro();
+            comp.PularParaMarcadorSeIgual(inicio);
+            comp.PularParaMarcador(senao);
+            comp.AplicarMarcadorAqui(inicio);
+            foreach (var no in SeSim)
+            {
+                no.Compilar(comp, ref estado);
+            }
+            comp.PularParaMarcador(fim);
+            comp.AplicarMarcadorAqui(senao);
+            foreach (var no in SeNao)
+            {
+                no.Compilar(comp, ref estado);
+            }
+            comp.AplicarMarcadorAqui(fim);
         }
     }
 }

@@ -30,12 +30,23 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoMaiorIgualA : NoComparadorBase
     {
         public NoMaiorIgualA()
         {
+        }
+
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            Item2.Compilar(comp, ref estado);
+            comp.EmpilharValorAtual();
+            Item1.Compilar(comp, ref estado);
+            comp.DesempilharECompararSeMaiorOuIgualGuardandoNoValorAtual();
+            comp.DeclararTipoDoValorAtual(Integracao.ArquiteturaDoCompilador.TiposDeVariavel.Logico);
         }
 
         protected override void Executar(ref EstadoExecucao estado)

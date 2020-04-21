@@ -30,6 +30,8 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoLerVariavel : No
@@ -47,6 +49,16 @@ namespace HCIPC.Arvore
             {
                 throw new Erro(this, "Variável '" + Nome + "' não encontrada.");
             }
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            if (estado[Nome] == null)
+            {
+                throw new Erro(this, "Variável '" + Nome + "' não encontrada.");
+            }
+            comp.GravarVariavelNoAtual(Nome);
+            comp.ConverterTipo(estado[Nome].GetType());
         }
     }
 }

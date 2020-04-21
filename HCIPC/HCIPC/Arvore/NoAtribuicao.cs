@@ -41,6 +41,12 @@ namespace HCIPC.Arvore
         {
         }
 
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            Conteudo.Compilar(comp, ref estado);
+            comp.GravarAtualNaVariavel(VariavelDestino);
+        }
+
         protected override void Executar(ref EstadoExecucao estado)
         {
             //Executa o nó que determina o valor a ser atribuido

@@ -31,6 +31,7 @@
 // */
 using System;
 using System.Collections.Generic;
+using HCIPC.Integracao;
 
 namespace HCIPC.Arvore
 {
@@ -63,6 +64,24 @@ namespace HCIPC.Arvore
                     throw new Erro(this, "Não é possível converter um valor não lógico em lógico");
                 }
             }
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            var inicio = comp.ReservarMarcador(ArquiteturaDoCompilador.TiposDeMarcador.Enquanto);
+            var fim = comp.ReservarMarcador(ArquiteturaDoCompilador.TiposDeMarcador.FimEnquanto);
+            var saida = comp.ReservarMarcador(ArquiteturaDoCompilador.TiposDeMarcador.SaidaDaRepeticao);
+            comp.AplicarMarcadorAqui(inicio);
+            Condicao.Compilar(comp, ref estado);
+            comp.CompararSeValorAtualForIgualAVerdadeiro();
+            comp.PularParaMarcadorSeDiferente(fim);
+            foreach (var no in Repeticao)
+            {
+                no.Compilar(comp, ref estado);
+            }
+            comp.PularParaMarcador(inicio);
+            comp.AplicarMarcadorAqui(fim);
+            comp.AplicarMarcadorAqui(saida);
         }
     }
 }

@@ -106,6 +106,8 @@ namespace HCIPC.Arvore
             if (estado.Interpretador.Abortar) throw new Erro(this, "Execução abortada");
         }
 
+        public abstract void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado);
+
         //Comando implementado pelos Nós para executar o comando
         protected abstract void Executar(ref EstadoExecucao estado);
     }

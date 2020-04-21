@@ -41,6 +41,13 @@ namespace HCIPC.Arvore
         {
         }
 
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            comp.DeclararVariavel(Nome, ValorInicial);
+            // Usado para verificacao de tipos posterior
+            estado[Nome] = ValorInicial; 
+        }
+
         protected override void Executar(ref EstadoExecucao estado)
         {
             //Declara uma variável, armazenando um valor genérico dela (normalmente "0), para que seja comparado no futuro os tipos de variável

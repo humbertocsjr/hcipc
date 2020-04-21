@@ -20,6 +20,7 @@ inicio
 fimfuncao
  
 inicio
+    escreva("oi" != "oi")
     escreva("Digite o primeiro número..: ")
     leia(n1)
     multiplica(n1, n2)

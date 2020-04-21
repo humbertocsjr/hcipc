@@ -30,12 +30,19 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoDoisPontos : No
     {
         public NoDoisPontos()
         {
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void Executar(ref EstadoExecucao estado)

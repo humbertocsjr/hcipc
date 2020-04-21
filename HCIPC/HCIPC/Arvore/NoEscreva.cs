@@ -31,6 +31,7 @@
 // */
 using System;
 using System.Collections.Generic;
+using HCIPC.Integracao;
 
 namespace HCIPC.Arvore
 {
@@ -62,6 +63,16 @@ namespace HCIPC.Arvore
             //Caso seja a variação Escreval, imprime um ENTER
             if (EnterAoFinal) estado.ES.Enter();
             estado.Valor = null;
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            foreach (var no in Argumentos)
+            {
+                no.Compilar(comp, ref estado);
+                comp.SisOp.EscrevaParaUsuarioConteudoDoValorAtual();
+            }
+            if (EnterAoFinal) comp.SisOp.EscrevaParaUsuarioQuebraDeLinha();
         }
     }
 }

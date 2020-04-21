@@ -43,6 +43,12 @@ namespace HCIPC.Arvore
         {
         }
 
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            comp.ConverterVariavelNumericaEmTextoGuardandoNoValorAtual(Nome, CasasAntes, CasasDepois);
+            comp.DeclararTipoDoValorAtual(Integracao.ArquiteturaDoCompilador.TiposDeVariavel.Texto);
+        }
+
         protected override void Executar(ref EstadoExecucao estado)
         {
             var obj = estado[Nome];

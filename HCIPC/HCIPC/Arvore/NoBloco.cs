@@ -38,6 +38,14 @@ namespace HCIPC.Arvore
         {
         }
 
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            foreach (var no in Nos)
+            {
+                no.Compilar(comp, ref estado);
+            }
+        }
+
         protected override void Executar(ref EstadoExecucao estado)
         {
             foreach (var no in Nos)

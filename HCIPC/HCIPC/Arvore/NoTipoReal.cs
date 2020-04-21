@@ -30,12 +30,19 @@
 // * SUCH DAMAGE.
 // */
 using System;
+using HCIPC.Integracao;
+
 namespace HCIPC.Arvore
 {
     public class NoTipoReal : No
     {
         public NoTipoReal()
         {
+        }
+
+        public override void Compilar(ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void Executar(ref EstadoExecucao estado)

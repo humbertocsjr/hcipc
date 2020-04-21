@@ -43,6 +43,18 @@ namespace HCIPC.Arvore
         {
         }
 
+        public override void Compilar(Integracao.ArquiteturaDoCompilador comp, ref EstadoExecucao estado)
+        {
+            if(Nome.Contains("."))
+            {
+                comp.ChamarRotinaExterna(Nome.Split('.')[0], Nome.Split('.')[1], Parametros);
+            }
+            else
+            {
+                comp.ChamarRotinaLocal(Nome, Parametros);
+            }
+        }
+
         protected override void Executar(ref EstadoExecucao estado)
         {
             List<object> pars = new List<object>();
