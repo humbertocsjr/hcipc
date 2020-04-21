@@ -15,11 +15,6 @@ namespace HCPC8086
             Binario.Marcar(reserva);
         }
 
-        public override void ChamarRotinaExterna(string biblioteca, string nome, List<No> nosNaoProcessados)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void ChamarRotinaLocal(string nome, List<No> nosNaoProcessados)
         {
             throw new NotImplementedException();

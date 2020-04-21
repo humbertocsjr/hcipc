@@ -53,7 +53,7 @@ namespace HCPC8086
 
         public List<byte> Dados { get; private set; } = new List<byte>();
 
-        public string AlgoritmoAtual { get; set } = "";
+        public string AlgoritmoAtual { get; set; } = "";
         public string RotinaAtual { get; set; } = "";
 
 

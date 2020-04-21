@@ -47,6 +47,9 @@ namespace HCIPC.Integracao
         public abstract void LeiaDoUsuarioGravandoNaVariavelReal(string nome);
         public abstract void LeiaDoUsuarioGravandoNaVariavelLogico(string nome);
         public abstract void SairParaOSistemaOperacional(int codigoDeErro);
+        // Passado os parametros nao processados pois cada arquitetura passa os parametros em uma ordem especifica que deve ser processado pelo compilador
+        public abstract void ChamarRotinaExterna(string biblioteca, string nome, List<Arvore.No> nosNaoProcessados);
+
     }
 
     public abstract class ArquiteturaDoCompilador
@@ -146,8 +149,7 @@ namespace HCIPC.Integracao
 
         // Passado os parametros nao processados pois cada arquitetura passa os parametros em uma ordem especifica que deve ser processado pelo compilador
         public abstract void ChamarRotinaLocal(string nome, List<Arvore.No> nosNaoProcessados);
-        public abstract void ChamarRotinaExterna(string biblioteca, string nome, List<Arvore.No> nosNaoProcessados);
-
+        
         public abstract void ConverterVariavelNumericaEmTextoGuardandoNoValorAtual(string nome, int casasAntes, int casasDepois);
 
         public abstract void DeclararVariavel(string nome, object valorInicial);

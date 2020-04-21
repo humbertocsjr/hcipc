@@ -47,7 +47,7 @@ namespace HCIPC.Arvore
         {
             if(Nome.Contains("."))
             {
-                comp.ChamarRotinaExterna(Nome.Split('.')[0], Nome.Split('.')[1], Parametros);
+                comp.SisOp.ChamarRotinaExterna(Nome.Split('.')[0], Nome.Split('.')[1], Parametros);
             }
             else
             {
