@@ -153,6 +153,13 @@ namespace HCIPC
                         Valor = (string)par
                     });
                 }
+                else if (par is byte[])
+                {
+                    no.Parametros.Add(new NoDados()
+                    {
+                        Valor = (byte[])par
+                    });
+                }
                 else if (par is bool)
                 {
                     no.Parametros.Add(((bool)par) ? (No)new NoVerdadeiro() : (No)new NoFalso());

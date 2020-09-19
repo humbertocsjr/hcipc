@@ -91,6 +91,8 @@ namespace HCIPC
                     return "Lógico";
                 case "string":
                     return "Caractere";
+                case "byte[]":
+                    return "Dados";
                 default:
                     return "<DESCONHECIDO>";
             }

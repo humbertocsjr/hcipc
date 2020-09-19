@@ -60,6 +60,7 @@ namespace HCIPC.Integracao
             Real,
             Texto,
             Logico,
+            Dados,
             Nenhum
         }
 
@@ -101,6 +102,10 @@ namespace HCIPC.Integracao
             else if (tipo.IsInstanceOfType(true))
             {
                 return TiposDeVariavel.Logico;
+            }
+            else if (tipo.IsInstanceOfType(new byte[] { }))
+            {
+                return TiposDeVariavel.Dados;
             }
             else
             {
