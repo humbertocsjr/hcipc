@@ -625,6 +625,10 @@ namespace HCIPC
                             {
                                 ((NoFuncaoProcedimento)no).TipoRetornado = typeof(int);
                             }
+                            if (sub is NoTipoDados)
+                            {
+                                ((NoFuncaoProcedimento)no).TipoRetornado = typeof(byte[]);
+                            }
                             else if (sub is NoTipoReal)
                             {
                                 ((NoFuncaoProcedimento)no).TipoRetornado = typeof(decimal);
@@ -669,6 +673,9 @@ namespace HCIPC
                     break;
                 case "real":
                     no = new NoTipoReal();
+                    break;
+                case "dados":
+                    no = new NoTipoDados();
                     break;
                 case "caracter":
                 case "caractere":
@@ -893,6 +900,10 @@ namespace HCIPC
                                     if (proximo is NoTipoInteiro)
                                     {
                                         noTemp.ValorInicial = 0;
+                                    }
+                                    else if (proximo is NoTipoDados)
+                                    {
+                                        noTemp.ValorInicial = new byte[] { };
                                     }
                                     else if (proximo is NoTipoReal)
                                     {
