@@ -127,6 +127,7 @@ namespace HCIPC
                 }
                 foreach (var par in Interpretador.Rotinas[nomeRotina].Parametros)
                 {
+                    exe.RegistrarVariavelDesteNivel(par.Key);
                     exe[par.Key] = parametros[i];
                     if(parametros[i].GetType().FullName != par.Value.FullName)
                     {
@@ -158,19 +159,27 @@ namespace HCIPC
             return retorno;
         }
 
+        public void RegistrarVariavelDesteNivel(string nome)
+        {
+            if (!Variaveis.ContainsKey(nome.ToLower()))
+            {
+                Variaveis.Add(nome.ToLower(), null);
+            }
+
+        }
+
         public object this[string nome]
         {
             get
             {
                 //Busca valor da variável no nivel global, e se não achar, busca no nivel local
-
-                if (NivelGlobal != null && NivelGlobal[nome.ToLower()] != null)
-                {
-                    return NivelGlobal[nome.ToLower()];
-                }
-                else if(Variaveis.ContainsKey(nome.ToLower()))
+                if (Variaveis.ContainsKey(nome.ToLower()))
                 {
                     return Variaveis[nome.ToLower()];
+                }
+                else if (NivelGlobal != null && NivelGlobal[nome.ToLower()] != null)
+                {
+                    return NivelGlobal[nome.ToLower()];
                 }
                 else
                 {
@@ -179,14 +188,14 @@ namespace HCIPC
             }
             set
             {
-                //Caso exista como variavel global, grava o valor, senão grava numa existente local, senão cria uma variável
-                if(NivelGlobal != null && NivelGlobal[nome.ToLower()] != null)
-                {
-                    NivelGlobal[nome.ToLower()] = value;
-                }
-                else if(Variaveis.ContainsKey(nome.ToLower()))
+                //Caso exista como variavel local, grava o valor, senão grava numa existente global, senão cria uma variável
+                if (Variaveis.ContainsKey(nome.ToLower()))
                 {
                     Variaveis[nome.ToLower()] = value;
+                }
+                else if (NivelGlobal != null && NivelGlobal[nome.ToLower()] != null)
+                {
+                    NivelGlobal[nome.ToLower()] = value;
                 }
                 else
                 {
