@@ -172,7 +172,7 @@
         editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/hcpc");
 
-        var conex = new WebSocket("ws://93.188.164.39:19890");
+        var conex = new WebSocket("ws://127.0.0.1:1990");
         conex.onmessage = function (evento)
         {
             var dados = JSON.parse(evento.data);

@@ -26,3 +26,10 @@
 /Users/humberto/Documents/GitHub/hcplataforma/HCPlataforma/HCIPC/obj/Debug/HCIPC.csproj.CoreCompileInputs.cache
 /Users/humberto/Documents/GitHub/hcplataforma/HCPlataforma/HCIPC/obj/Debug/HCIPC.exe
 /Users/humberto/Documents/GitHub/hcplataforma/HCPlataforma/HCIPC/obj/Debug/HCIPC.pdb
+C:\Users\alber\Desktop\PseudoCodeInterpreter\hcipc\HCIPC\HCIPC\bin\Debug\teste.hcp
+C:\Users\alber\Desktop\PseudoCodeInterpreter\hcipc\HCIPC\HCIPC\bin\Debug\HCIPC.exe
+C:\Users\alber\Desktop\PseudoCodeInterpreter\hcipc\HCIPC\HCIPC\bin\Debug\HCIPC.pdb
+C:\Users\alber\Desktop\PseudoCodeInterpreter\hcipc\HCIPC\HCIPC\obj\Debug\HCIPC.csproj.AssemblyReference.cache
+C:\Users\alber\Desktop\PseudoCodeInterpreter\hcipc\HCIPC\HCIPC\obj\Debug\HCIPC.csproj.CoreCompileInputs.cache
+C:\Users\alber\Desktop\PseudoCodeInterpreter\hcipc\HCIPC\HCIPC\obj\Debug\HCIPC.exe
+C:\Users\alber\Desktop\PseudoCodeInterpreter\hcipc\HCIPC\HCIPC\obj\Debug\HCIPC.pdb

@@ -24,6 +24,11 @@ namespace HCIPCWEB
         public void Carregar(string codigo)
         {
             UltimoAcesso = DateTime.Now;
+            if(Interpretador != null)
+            {
+                Interpretador.AbortarExecucao();
+                GC.Collect();
+            }
             Interpretador = new Interpretador();
             Interpretador.EntradaSaidaPadrao = new EntradaSaidaWeb()
             {
@@ -44,7 +49,7 @@ namespace HCIPCWEB
                 case "codigo":
                     {
                         Carregar(((string)obj.Codigo.ToString()));
-                        Console.WriteLine(Conexao.ConnectionInfo.Id.ToString() + " - Recebido Codigo do IP" + Conexao.ConnectionInfo.ClientIpAddress.ToString());
+                        Console.WriteLine("[" + DateTime.Now.ToString() + "] " + Conexao.ConnectionInfo.Id.ToString() + " - Recebido Codigo do IP" + Conexao.ConnectionInfo.ClientIpAddress.ToString());
                     }
                     break;
                 case "executar":
@@ -53,7 +58,7 @@ namespace HCIPCWEB
                         {
                             Interpretador.Executar();
                         }).Start();
-                        Console.WriteLine(Conexao.ConnectionInfo.Id.ToString() + " - Executado Codigo do IP" + Conexao.ConnectionInfo.ClientIpAddress.ToString());
+                        Console.WriteLine("[" + DateTime.Now.ToString() + "] " + Conexao.ConnectionInfo.Id.ToString() + " - Executado Codigo do IP" + Conexao.ConnectionInfo.ClientIpAddress.ToString());
                     }
                     break;
                 case "entrada":
@@ -61,12 +66,12 @@ namespace HCIPCWEB
                         HtmlDocument html = new HtmlDocument();
                         html.LoadHtml((string)obj.Mensagem.ToString());
                         Entrada = html.DocumentNode.InnerText;
-                        Console.WriteLine(Conexao.ConnectionInfo.Id.ToString() + " - Recebido Entrada do IP" + Conexao.ConnectionInfo.ClientIpAddress.ToString());
+                        Console.WriteLine("[" + DateTime.Now.ToString() + "] " + Conexao.ConnectionInfo.Id.ToString() + " - Recebido Entrada do IP" + Conexao.ConnectionInfo.ClientIpAddress.ToString());
                     }
                     break;
                 default:
                     Conexao.Close();
-                    Console.WriteLine(Conexao.ConnectionInfo.Id.ToString() + " - Recebido Pacote Inválido do IP" + Conexao.ConnectionInfo.ClientIpAddress.ToString());
+                    Console.WriteLine("[" + DateTime.Now.ToString() + "] " + Conexao.ConnectionInfo.Id.ToString() + " - Recebido Pacote Inválido do IP" + Conexao.ConnectionInfo.ClientIpAddress.ToString());
                     break;
             }
         }
