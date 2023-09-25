@@ -19,7 +19,7 @@
             position: absolute;
             top: 40px;
             right: 50%;
-            bottom: 200px;
+            bottom: 30px;
             left: 0;
         }
 
@@ -28,7 +28,7 @@
             top: 40px;
             right: 0;
             left: 50%;
-            bottom: 200px;
+            bottom: 30px;
             background-color: #272822;
             color: white;
             font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
@@ -44,7 +44,7 @@
 
         #conteudo {
             position: absolute;
-            top: 50px;
+            top: 25px;
             right: 10px;
             left: 10px;
             bottom: 10px;
@@ -55,18 +55,57 @@
             font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
         }
 
-        #copyright {
+        #rodape {
             position: absolute;
-            height: 200px;
+            height: 30px;
             right: 0;
             bottom: 0;
             left: 0;
-            overflow-y: scroll;
+            overflow-y: none;
             background-color: #272822;
             color: gray;
             font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
         }
+
+        .botao-hacker {
+            background-color: black;
+            border: #4AF626 1px solid;
+            color: #4AF626;
+            margin-left: 10px;
+        }
+
+        .informacao {
+            padding: 20px;
+            background-color: #0d3e0c;
+            color: white;
+            margin-bottom: 15px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: none;
+            z-index: 10000;
+        }
+
+        .botao-fechar {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .botao-fechar:hover {
+                color: black;
+            }
     </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+            integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+            crossorigin="anonymous">
+    </script>
 </head>
 <body>
     <div id="titulo">
@@ -147,11 +186,16 @@
         fimalgoritmo
     </div>
     <div id="console">
-        <button onclick="executar(); return false;">Executar</button>
-        VERSÃO ALPHA - APÓS ALGUNS MINUTOS DE INATIVIDADE A CONEXÃO É INTERROMPIDA, PRECISANDO RECARREGAR A PÁGINA (O interpretador não reconhece comentários no código ainda)
+        <button class="botao-hacker" onclick="executar(); return false;">Executar</button>
         <pre id="conteudo"></pre>
     </div>
-    <div id="copyright">
+    <div class="informacao">
+        <span class="botao-fechar" onclick="this.parentElement.style.display='none';">&times;</span>
+        VERSÃO ALPHA - APÓS ALGUMAS HORAS DE INATIVIDADE A CONEXÃO É INTERROMPIDA, PRECISANDO RECARREGAR A PÁGINA
+        <br />
+        (O interpretador não reconhece comentários no código ainda)
+        <br />
+        <br />
         <b>Informações do projeto:</b><br />
         O Editor de Texto utilizado é o ACE encontrado no site https://ace.c9.io/. <br />
         Esta página contém trabalhos derivados do projeto ACE.<br />
@@ -164,20 +208,20 @@
         &nbsp;&nbsp;Copyright (c) 2020<br />
         &nbsp;&nbsp;Humberto Costa dos Santos Junior.  All rights reserved.<br />
         &nbsp;&nbsp;This product includes software developed by Humberto Costa dos Santos Junior and its contributors.<br />
-
-
+    </div>
+    <div id="rodape">
+        <button class="botao-hacker" onclick="$('.informacao').show(); return false;">Informações</button>
     </div>
     <script src="Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>var editor = ace.edit("editor");
+    <script>
+        var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/hcpc");
 
         var conex = new WebSocket("ws://127.0.0.1:1990");
-        conex.onmessage = function (evento)
-        {
+        conex.onmessage = function (evento) {
             var dados = JSON.parse(evento.data);
-            switch (dados.Tipo)
-            {
+            switch (dados.Tipo) {
                 case "escreva":
                     {
                         var theDiv = document.getElementById("conteudo");
@@ -198,9 +242,9 @@
                     {
                         var theDiv = document.getElementById("conteudo");
                         var content = document.createElement("input");
-                        content.setAttribute("type","text")
+                        content.setAttribute("type", "text")
                         content.setAttribute("id", "entrada")
-                        content.addEventListener("keypress", function(){if(event.keyCode==13){responderLeia();}return false;});
+                        content.addEventListener("keypress", function () { if (event.keyCode == 13) { responderLeia(); } return false; });
                         theDiv.appendChild(content);
                         content.focus();
                         theDiv.scrollTop = theDiv.scrollHeight;
@@ -208,8 +252,7 @@
             }
         }
 
-        function responderLeia()
-        {
+        function responderLeia() {
             var campo = document.getElementById("entrada");
             var theDiv = document.getElementById("conteudo");
             content = document.createTextNode(campo.value + "\n");
@@ -220,11 +263,10 @@
                     "Tipo": "entrada",
                     "Mensagem": campo.value
                 }));
-                campo.remove();
+            campo.remove();
         }
 
-        function executar()
-        {
+        function executar() {
             var theDiv = document.getElementById("conteudo");
             var content = document.createTextNode("\n");
             theDiv.appendChild(content);
@@ -238,6 +280,8 @@
                 {
                     "Tipo": "executar"
                 }));
-        }</script>
+        }
+    </script>
 </body>
 </html>
+
