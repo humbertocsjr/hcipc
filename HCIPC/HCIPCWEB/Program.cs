@@ -4,6 +4,7 @@ using System.Threading;
 using Fleck;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HCIPCWEB
 {
@@ -16,7 +17,9 @@ namespace HCIPCWEB
         {
             Console.WriteLine("Humberto Costa | Interpretador de Pseudo-Código via WebSockets");
 
-            var serv = new WebSocketServer("ws://0.0.0.0:1990");
+            var serv = new WebSocketServer("wss://0.0.0.0:1990");
+            serv.Certificate = X509Certificate2.CreateFromPemFile("cert.pem", "privkey.pem");
+            serv.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
             serv.Start(socket =>
             {
                 socket.OnOpen = () => AoAbrir(socket);
