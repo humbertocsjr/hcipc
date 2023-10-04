@@ -9,7 +9,7 @@ Foi incorporado o Projeto ACE (https://github.com/ajaxorg/ace-builds) na interfa
 
 ## Como usar
 
-Acesse http://pseudocodigo.online/
+Acesse https://humbertocsjr.dev.br/
 
 ### Projeto HCADWEB - Ambiente de Desenvolvimento Web
 
